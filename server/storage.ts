@@ -22,7 +22,7 @@ export interface IStorage {
   // Reservation methods
   getReservationsByUser(userId: number): Promise<(Reservation & { venue: Venue; queue: Queue })[]>;
   getReservation(id: number): Promise<Reservation | undefined>;
-  createReservation(reservation: InsertReservation): Promise<Reservation>;
+  createReservation(reservation: InsertReservation & { userId: number; position?: number }): Promise<Reservation>;
   updateReservationStatus(id: number, status: string): Promise<Reservation | undefined>;
   getActiveReservationByUser(userId: number): Promise<(Reservation & { venue: Venue; queue: Queue }) | undefined>;
 
@@ -238,7 +238,7 @@ export class MemStorage implements IStorage {
     return this.reservations.get(id);
   }
 
-  async createReservation(insertReservation: InsertReservation): Promise<Reservation> {
+  async createReservation(insertReservation: InsertReservation & { userId: number; position?: number }): Promise<Reservation> {
     const id = this.currentReservationId++;
     const queue = await this.getQueue(insertReservation.queueId);
     const position = (queue?.currentCount || 0) + 1;

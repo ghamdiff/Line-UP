@@ -25,10 +25,10 @@ export default function VenueDetail() {
   });
 
   const reservationMutation = useMutation({
-    mutationFn: async (queueId: number) => {
+    mutationFn: async (data: { queueId: number; estimatedWaitTime: number }) => {
       const response = await apiRequest("POST", "/api/reservations", {
-        queueId,
-        estimatedWaitTime: 25
+        queueId: data.queueId,
+        estimatedWaitTime: data.estimatedWaitTime
       });
       return response.json();
     },
@@ -67,8 +67,10 @@ export default function VenueDetail() {
   };
 
   const handleJoinQueue = (queueId: number) => {
+    const queue = queues?.find(q => q.id === queueId);
+    const estimatedWaitTime = queue?.averageWaitTime || 25;
     setSelectedQueue(queueId);
-    reservationMutation.mutate(queueId);
+    reservationMutation.mutate({ queueId, estimatedWaitTime });
   };
 
   if (venueLoading || !venue) {

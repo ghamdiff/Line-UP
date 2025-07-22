@@ -1,4 +1,5 @@
 import { Clock } from "lucide-react";
+import QueueTimer from "./queue-timer";
 
 interface CurrentQueueStatusProps {
   reservation: any;
@@ -24,14 +25,12 @@ export default function CurrentQueueStatus({ reservation }: CurrentQueueStatusPr
         </div>
       </div>
       
-      <div className="mt-3 bg-white bg-opacity-20 rounded-lg p-3">
-        <div className="flex justify-between items-center mb-2">
-          <span className="text-sm">الوقت المتوقع</span>
-          <span className="font-semibold arabic-numerals">
-            {reservation.estimatedWaitTime} دقيقة
-          </span>
-        </div>
-        <div className="w-full bg-white bg-opacity-30 rounded-full h-2">
+      <div className="mt-3">
+        <QueueTimer 
+          estimatedWaitTime={reservation.estimatedWaitTime || 25}
+          createdAt={reservation.createdAt}
+        />
+        <div className="mt-3 w-full bg-white bg-opacity-30 rounded-full h-2">
           <div 
             className="bg-white h-2 rounded-full transition-all duration-300" 
             style={{ width: `${progressPercentage}%` }}

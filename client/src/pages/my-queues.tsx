@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Clock, ArrowRight, QrCode } from "lucide-react";
 import { Link } from "wouter";
 import BottomNavigation from "@/components/bottom-navigation";
+import QueueTimer from "@/components/queue-timer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -103,14 +104,12 @@ export default function MyQueues() {
                   </div>
 
                   {reservation.status === "waiting" && (
-                    <div className="bg-gray-50 rounded-lg p-3 mb-3">
-                      <div className="flex justify-between items-center mb-2">
-                        <span className="text-sm text-gray-600">الوقت المتوقع</span>
-                        <span className="font-semibold text-gray-900">
-                          {reservation.estimatedWaitTime} دقيقة
-                        </span>
-                      </div>
-                      <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div className="mb-3">
+                      <QueueTimer 
+                        estimatedWaitTime={reservation.estimatedWaitTime || 25}
+                        createdAt={reservation.createdAt}
+                      />
+                      <div className="w-full bg-gray-200 rounded-full h-2 mt-3">
                         <div 
                           className="bg-primary h-2 rounded-full" 
                           style={{ width: `${Math.max(20, 100 - (reservation.position * 5))}%` }}

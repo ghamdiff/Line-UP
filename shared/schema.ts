@@ -84,7 +84,10 @@ export const insertQueueSchema = createInsertSchema(queues).omit({
 
 export const insertReservationSchema = createInsertSchema(reservations).omit({
   id: true,
+  userId: true,
+  position: true,
   qrCode: true,
+  notificationSent: true,
   createdAt: true,
   updatedAt: true,
 });

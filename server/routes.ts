@@ -77,9 +77,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Reservations endpoints
   app.post("/api/reservations", async (req, res) => {
     try {
-      const data = insertReservationSchema.parse(req.body);
+      // Create a custom schema for the request that only requires queueId and estimatedWaitTime
+      const requestSchema = z.object({
+        queueId: z.number(),
+        estimatedWaitTime: z.number().optional(),
+        status: z.string().optional()
+      });
+      
+      const data = requestSchema.parse(req.body);
       // For demo purposes, we'll use userId = 1
-      const reservation = await storage.createReservation({ ...data, userId: 1 });
+      const reservation = await storage.createReservation({ 
+        ...data, 
+        userId: 1,
+        position: 0, // Will be calculated in storage layer
+      });
       res.json(reservation);
     } catch (error) {
       if (error instanceof z.ZodError) {
