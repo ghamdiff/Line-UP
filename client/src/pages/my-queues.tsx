@@ -1,15 +1,43 @@
-import { useQuery } from "@tanstack/react-query";
-import { Clock, ArrowRight, QrCode } from "lucide-react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { Clock, ArrowRight, QrCode, X } from "lucide-react";
 import { Link } from "wouter";
 import BottomNavigation from "@/components/bottom-navigation";
 import QueueTimer from "@/components/queue-timer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useToast } from "@/hooks/use-toast";
+import { apiRequest } from "@/lib/queryClient";
 
 export default function MyQueues() {
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+  
   const { data: reservations, isLoading } = useQuery<any[]>({
     queryKey: ["/api/reservations/user/1"],
+  });
+
+  const leaveMutation = useMutation({
+    mutationFn: async (reservationId: number) => {
+      const response = await apiRequest("PATCH", `/api/reservations/${reservationId}/status`, {
+        status: "cancelled"
+      });
+      return response.json();
+    },
+    onSuccess: () => {
+      toast({
+        title: "تم الخروج من الطابور",
+        description: "لقد خرجت من الطابور بنجاح.",
+      });
+      queryClient.invalidateQueries({ queryKey: ["/api/reservations"] });
+    },
+    onError: () => {
+      toast({
+        title: "خطأ",
+        description: "حدث خطأ أثناء الخروج من الطابور. حاول مرة أخرى.",
+        variant: "destructive",
+      });
+    },
   });
 
   const getStatusBadge = (status: string) => {
@@ -122,12 +150,25 @@ export default function MyQueues() {
                     <p className="text-xs text-gray-500">
                       انضممت في: {new Date(reservation.createdAt).toLocaleDateString('ar-SA')}
                     </p>
-                    {reservation.qrCode && (
-                      <Button variant="outline" size="sm" className="flex items-center gap-2">
-                        <QrCode className="w-4 h-4" />
-                        <span className="text-xs">رمز الدخول</span>
-                      </Button>
-                    )}
+                    <div className="flex items-center gap-2">
+                      {reservation.status === "waiting" && (
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          onClick={() => leaveMutation.mutate(reservation.id)}
+                          disabled={leaveMutation.isPending}
+                          className="text-red-600 hover:bg-red-50 p-2 h-auto"
+                        >
+                          <X className="w-4 h-4" />
+                        </Button>
+                      )}
+                      {reservation.qrCode && (
+                        <Button variant="outline" size="sm" className="flex items-center gap-2">
+                          <QrCode className="w-4 h-4" />
+                          <span className="text-xs">رمز الدخول</span>
+                        </Button>
+                      )}
+                    </div>
                   </div>
                 </CardContent>
               </Card>
