@@ -74,9 +74,6 @@ export default function MyQueues() {
       <div className="bg-white border-b border-gray-200 px-4 py-3">
         <div className="flex items-center gap-3">
           <Link href="/">
-            <Button variant="ghost" size="sm" className="p-2">
-              <ArrowRight className="w-5 h-5" />
-            </Button>
           </Link>
           <h1 className="text-lg font-semibold text-gray-900">طوابيري</h1>
         </div>

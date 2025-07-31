@@ -1,5 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import { Search, MapPin, Bell, Calendar, Utensils, Ticket, Map } from "lucide-react";
+import {
+  Search,
+  Building2,
+  Bell,
+  Calendar,
+  Utensils,
+  Ticket,
+  BotMessageSquare,
+} from "lucide-react";
 import { Link } from "wouter";
 import VenueCard from "@/components/venue-card";
 import MapSection from "@/components/map-section";
@@ -8,9 +16,14 @@ import CurrentQueueStatus from "@/components/current-queue-status";
 import BottomNavigation from "@/components/bottom-navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useAuth } from "@/contexts/AuthContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 import type { Venue } from "@shared/schema";
 
 export default function Home() {
+  const { user } = useAuth();
+  const { t, language } = useLanguage();
+  
   const { data: venues, isLoading } = useQuery<Venue[]>({
     queryKey: ["/api/venues"],
   });
@@ -20,19 +33,27 @@ export default function Home() {
   });
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-20">
-
-      {/* Header with Location */}
-      <div className="bg-white border-b border-gray-200 px-4 py-3">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pb-20">
+      <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <MapPin className="text-primary w-5 h-5" />
+            <Building2 className="text-primary w-5 h-5" />
             <div>
-              <p className="font-semibold text-gray-900">الموقع الحالي</p>
-              <p className="text-sm text-gray-500">أبها، المملكة العربية السعودية</p>
+              <p className="font-semibold text-gray-900 dark:text-white">
+                {language === 'ar' 
+                  ? `مرحبًا ${user?.name || 'بك'} في أبها!` 
+                  : `Welcome ${user?.name || ''} to Abha!`}
+              </p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                {language === 'ar' ? 'اكتشف ما هو متاح بالقرب منك' : 'Discover what\'s available near you'}
+              </p>
             </div>
           </div>
-          <Button variant="ghost" size="sm" className="p-2 bg-gray-100 rounded-full relative">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="p-2 bg-gray-100 rounded-full relative"
+          >
             <Bell className="w-5 h-5 text-gray-600" />
             <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
           </Button>
@@ -55,41 +76,60 @@ export default function Home() {
       <div className="px-4 py-4 bg-white border-b border-gray-100">
         <div className="grid grid-cols-4 gap-3">
           <Link href="/search?category=events">
-            <Button variant="ghost" className="flex flex-col items-center p-3 bg-blue-50 rounded-xl hover:bg-blue-100 h-auto">
+            <Button
+              variant="ghost"
+              className="w-full flex flex-col items-center p-3 bg-blue-50 rounded-xl hover:bg-blue-100 h-auto"
+            >
               <Calendar className="text-primary w-6 h-6 mb-2" />
-              <span className="text-xs font-medium text-gray-700">الفعاليات</span>
+              <span className="text-xs font-medium text-gray-700">
+                الفعاليات
+              </span>
             </Button>
           </Link>
           <Link href="/search?category=restaurants">
-            <Button variant="ghost" className="flex flex-col items-center p-3 bg-green-50 rounded-xl hover:bg-green-100 h-auto">
+            <Button
+              variant="ghost"
+              className="w-full flex flex-col items-center p-3 bg-green-50 rounded-xl hover:bg-green-100 h-auto"
+            >
               <Utensils className="text-secondary w-6 h-6 mb-2" />
               <span className="text-xs font-medium text-gray-700">المطاعم</span>
             </Button>
           </Link>
           <Link href="/search?category=tickets">
-            <Button variant="ghost" className="flex flex-col items-center p-3 bg-amber-50 rounded-xl hover:bg-amber-100 h-auto">
+            <Button
+              variant="ghost"
+              className="w-full flex flex-col items-center p-3 bg-amber-50 rounded-xl hover:bg-amber-100 h-auto"
+            >
               <Ticket className="text-accent w-6 h-6 mb-2" />
               <span className="text-xs font-medium text-gray-700">التذاكر</span>
             </Button>
           </Link>
           <Link href="/search?map=true">
-            <Button variant="ghost" className="flex flex-col items-center p-3 bg-purple-50 rounded-xl hover:bg-purple-100 h-auto">
-              <Map className="text-purple-500 w-6 h-6 mb-2" />
-              <span className="text-xs font-medium text-gray-700">الخريطة</span>
+            <Button
+              variant="ghost"
+              className="w-full flex flex-col items-center p-3 bg-purple-50 rounded-xl hover:bg-purple-100 h-auto"
+            >
+              <BotMessageSquare className="text-purple-500 w-6 h-6 mb-2" />
+              <span className="text-xs font-medium text-gray-700">AI</span>
             </Button>
           </Link>
         </div>
       </div>
 
       {/* Current Queue Status */}
-      {activeReservation && <CurrentQueueStatus reservation={activeReservation} />}
+      {activeReservation && (
+        <CurrentQueueStatus reservation={activeReservation} />
+      )}
 
       {/* Popular Venues */}
       <div className="px-4 py-4">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-bold text-gray-900">الأماكن المشهورة</h2>
           <Link href="/search">
-            <Button variant="ghost" className="text-primary font-medium text-sm">
+            <Button
+              variant="ghost"
+              className="text-primary font-medium text-sm"
+            >
               عرض الكل
             </Button>
           </Link>
@@ -98,14 +138,17 @@ export default function Home() {
         {isLoading ? (
           <div className="space-y-3">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="bg-white rounded-xl border border-gray-200 p-4 shimmer h-20"></div>
+              <div
+                key={i}
+                className="bg-white rounded-xl border border-gray-200 p-4 shimmer h-20"
+              ></div>
             ))}
           </div>
         ) : (
           <div className="space-y-3">
-            {venues?.slice(0, 3).map((venue) => (
-              <VenueCard key={venue.id} venue={venue} />
-            ))}
+            {venues
+              ?.slice(0, 3)
+              .map((venue) => <VenueCard key={venue.id} venue={venue} />)}
           </div>
         )}
       </div>
