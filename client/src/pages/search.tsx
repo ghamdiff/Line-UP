@@ -34,11 +34,11 @@ export default function SearchPage() {
 
   function getCategoryArabic(category: string): string {
     const categoryMap: Record<string, string> = {
-      "entertainment": "ترفيه",
-      "museum": "متاحف",
-      "theme park": "ملاهي",
-      "restaurant": "مطاعم",
-      "events": "فعاليات"
+      "Entertainment": "ترفيه",
+      "Museum": "متاحف",
+      "Theme Park": "ملاهي",
+      "Restaurant": "مطاعم",
+      "Events": "فعاليات"
     };
     return categoryMap[category.toLowerCase()] || category;
   }
@@ -73,7 +73,7 @@ export default function SearchPage() {
         <Tabs value={selectedCategory} onValueChange={setSelectedCategory}>
           <TabsList className="grid w-full grid-cols-4 bg-gray-100 dark:bg-gray-700">
             <TabsTrigger value="all" className="text-xs dark:text-gray-300">{language === 'ar' ? 'الكل' : 'All'}</TabsTrigger>
-            <TabsTrigger value="entertainment" className="text-xs dark:text-gray-300">{language === 'ar' ? 'ترفيه' : 'Entertainment'}</TabsTrigger>
+            <TabsTrigger value="Entertainment" className="text-xs dark:text-gray-300">{language === 'ar' ? 'ترفيه' : 'Entertainment'}</TabsTrigger>
             <TabsTrigger value="museum" className="text-xs dark:text-gray-300">{language === 'ar' ? 'متاحف' : 'Museums'}</TabsTrigger>
             <TabsTrigger value="theme park" className="text-xs dark:text-gray-300">{language === 'ar' ? 'ملاهي' : 'Theme Parks'}</TabsTrigger>
           </TabsList>

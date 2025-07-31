@@ -60,7 +60,7 @@ export const getQueueStatusInArabic = (status: string): string => {
 
 export const getCategoryInArabic = (category: string): string => {
   const categoryMap: Record<string, string> = {
-    'entertainment': 'ترفيه',
+    'Entertainment': 'ترفيه',
     'museum': 'متاحف',
     'theme park': 'ملاهي',
     'restaurant': 'مطاعم',

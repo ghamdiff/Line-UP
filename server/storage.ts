@@ -63,7 +63,7 @@ export class MemStorage implements IStorage {
       {
         name: "Soudah Cable Car",
         nameAr: "تلفريك السودة",
-        category: "entertainment",
+        category: "Entertainment",
         categoryAr: "ترفيه",
         description: "A scenic cable car experience offering breathtaking views of the Asir mountains and valleys.",
         descriptionAr: "تجربة تلفريك خلابة تقدم إطلالات رائعة على جبال ووديان عسير.",
@@ -79,7 +79,7 @@ export class MemStorage implements IStorage {
       {
         name: "High City",
         nameAr: "المدينة العالية",
-        category: "entertainment",
+        category: "Entertainment",
         categoryAr: "ترفيه",
         description: "A modern mountaintop destination in Abha offering dining, entertainment, and stunning mountain views.",
         descriptionAr: "وجهة جبلية عصرية في أبها تقدم المأكولات والترفيه والإطلالات الجبلية الخلابة.",

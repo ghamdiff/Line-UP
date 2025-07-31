@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/LanguageContext";
 import type { Venue } from "@shared/schema";
 
 interface MapSectionProps {
@@ -6,6 +7,8 @@ interface MapSectionProps {
 }
 
 export default function MapSection({ venues }: MapSectionProps) {
+  const { t, language } = useLanguage();
+  
   const getMapPinCount = (venue: Venue) => {
     // Mock queue count based on rating
     const ratingNum = parseFloat(venue.rating || "0");
@@ -21,14 +24,16 @@ export default function MapSection({ venues }: MapSectionProps) {
   return (
     <div className="px-4 py-4">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-bold text-gray-900">فعاليات قريبة</h2>
+        <h2 className="text-lg font-bold text-gray-900 dark:text-white">
+          {t('nearbyEvents')}
+        </h2>
         <Button variant="ghost" className="text-primary font-medium text-sm" onClick={() => {
            const mapImage = document.querySelector('img[alt="الخريطة منطقة عسير "]') as HTMLImageElement | null;
            if (mapImage) {
              mapImage.scrollIntoView({ behavior: 'smooth', block: 'center' });
            }
         }}>
-          أظهر لي الخريطة
+          {t('showMap')}
         </Button>
       </div>
       
