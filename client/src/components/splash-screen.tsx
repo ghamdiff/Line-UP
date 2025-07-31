@@ -29,8 +29,8 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
         
        {/* Logo */}
         <div className="mb-8 animate-pulse">
-          <div className="w-80 h-16 bg-white rounded-xl flex items-center justify-center mx-auto mb-7 shadow-s">
-            <img src="https://i.ibb.co/8LzMSYhg/IMG-20250731-WA0016.jpg" alt="Logo" className="w-80 h-16 rounded-xl" />
+          <div className="w-48 h-48 bg-white rounded-xl flex items-center justify-center mx-auto mb-7 shadow-s">
+            <img src="https://i.ibb.co/8LzMSYhg/IMG-20250731-WA0016.jpg" alt="Logo" className="w-48 h-48 rounded-xl" />
           </div>
 
           {/* App Name */}

@@ -32,14 +32,17 @@ export default function MapSection({ venues }: MapSectionProps) {
         </Button>
       </div>
       
-      {/* Mock Map with Location Pins */}
-      <div className="bg-gray-200 rounded-xl h-48 relative overflow-hidden">
-        {/* Map background image */}
-        <img
-          src="https://i.ibb.co/f6JydqJ/SAVE-20250724-171433.jpg"
-          alt="الخريطة منطقة عسير "
-          className="w-full h-full object-cover"
-        />
+      {/* Live Map with Location Pins */}
+      <div className="rounded-xl h-48 relative overflow-hidden">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d236577.8757149288!2d42.68158845393613!3d18.21738731741536!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x15e8ee378100c19f%3A0x41075240e0e42666!2z2YXYttmF2KjYudmE2Kkg2KfZhNmC2KfZh9mI2LHYqQ!5e0!3m2!1sar!2ssa!4v1709234756918!5m2!1sar!2ssa"
+          width="100%"
+          height="100%"
+          style={{ border: 0 }}
+          allowFullScreen=""
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          title="Live Map of Aseer Region"
         
         {/* Location Pins */}
         <div className="absolute inset-0">

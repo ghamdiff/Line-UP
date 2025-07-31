@@ -38,8 +38,7 @@ export default function BottomNavigation() {
         
         <Link href="/ai-tool">
           <Button variant="ghost" className={`flex flex-col items-center py-2 h-auto ${getIconColor("/ai-tool")}`}>
-            <span className="text-lg">🤖</span>
-            <span className="text-xs">استكشف</span>
+            <span className="text-lg">استكشف</span>
           </Button>
         </Link>
         
