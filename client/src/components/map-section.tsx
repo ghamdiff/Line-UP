@@ -15,17 +15,20 @@ export default function MapSection({ venues }: MapSectionProps) {
   };
 
   const getPinColor = (count: number) => {
-    if (count >= 40) return "bg-red-500";
-    if (count >= 15) return "bg-primary";
-    return "bg-secondary";
+    return "hidden";
   };
 
   return (
     <div className="px-4 py-4">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-bold text-gray-900">الأماكن القريبة</h2>
-        <Button variant="ghost" className="text-primary font-medium text-sm">
-          عرض الخريطة
+        <h2 className="text-lg font-bold text-gray-900">فعاليات قريبة</h2>
+        <Button variant="ghost" className="text-primary font-medium text-sm" onClick={() => {
+           const mapImage = document.querySelector('img[alt="الخريطة منطقة عسير "]') as HTMLImageElement | null;
+           if (mapImage) {
+             mapImage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+           }
+        }}>
+          أظهر لي الخريطة
         </Button>
       </div>
       
@@ -33,8 +36,8 @@ export default function MapSection({ venues }: MapSectionProps) {
       <div className="bg-gray-200 rounded-xl h-48 relative overflow-hidden">
         {/* Map background image */}
         <img
-          src="https://images.unsplash.com/photo-1524661135-423995f22d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=200"
-          alt="خريطة المدينة"
+          src="https://i.ibb.co/f6JydqJ/SAVE-20250724-171433.jpg"
+          alt="الخريطة منطقة عسير "
           className="w-full h-full object-cover"
         />
         

@@ -30,7 +30,7 @@ export default function Profile() {
           </Avatar>
           <div className="flex-1">
             <h2 className="text-xl font-bold text-gray-900">أحمد محمد</h2>
-            <p className="text-gray-500">ahmed.mohammed@example.com</p>
+            <p className="text-gray-500">ahmed.hasan@example.com</p>
             <p className="text-sm text-gray-400">+966 50 123 4567</p>
           </div>
           <Button variant="outline" size="sm">

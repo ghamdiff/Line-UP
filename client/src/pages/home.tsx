@@ -21,16 +21,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
-      {/* Status Bar */}
-      <div className="bg-gray-900 text-white px-4 py-1 flex justify-between items-center text-xs">
-        <span>9:41</span>
-        <div className="flex items-center gap-1">
-          <span className="text-xs">📶</span>
-          <span className="text-xs">📶</span>
-          <span>100%</span>
-          <span className="text-xs">🔋</span>
-        </div>
-      </div>
 
       {/* Header with Location */}
       <div className="bg-white border-b border-gray-200 px-4 py-3">
@@ -39,7 +29,7 @@ export default function Home() {
             <MapPin className="text-primary w-5 h-5" />
             <div>
               <p className="font-semibold text-gray-900">الموقع الحالي</p>
-              <p className="text-sm text-gray-500">الرياض، المملكة العربية السعودية</p>
+              <p className="text-sm text-gray-500">أبها، المملكة العربية السعودية</p>
             </div>
           </div>
           <Button variant="ghost" size="sm" className="p-2 bg-gray-100 rounded-full relative">

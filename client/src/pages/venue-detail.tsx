@@ -52,8 +52,8 @@ export default function VenueDetail() {
     const count = currentCount || 0;
     const capacity = maxCapacity || 100;
     const percentage = (count / capacity) * 100;
-    if (percentage < 30) return "status-green";
-    if (percentage < 70) return "status-amber";
+    if (percentage < 10) return "status-green";
+    if (percentage < 30) return "status-amber";
     return "status-red";
   };
 
@@ -61,8 +61,8 @@ export default function VenueDetail() {
     const count = currentCount || 0;
     const capacity = maxCapacity || 100;
     const percentage = (count / capacity) * 100;
-    if (percentage < 30) return "طابور قصير";
-    if (percentage < 70) return "طابور متوسط";
+    if (percentage < 10) return "طابور قصير";
+    if (percentage < 30) return "طابور متوسط";
     return "طابور طويل";
   };
 

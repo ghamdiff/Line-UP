@@ -10,9 +10,9 @@ interface VenueCardProps {
 export default function VenueCard({ venue }: VenueCardProps) {
   const getStatusColor = (rating: string) => {
     const ratingNum = parseFloat(rating);
-    if (ratingNum >= 4.5) return "status-green";
-    if (ratingNum >= 4.0) return "status-amber";
-    return "status-red";
+    if (ratingNum >= 4.8) return "status-red";
+    if (ratingNum >= 4.5) return "status-amber";
+    return "status-green";
   };
 
   const getWaitTimeRange = () => {

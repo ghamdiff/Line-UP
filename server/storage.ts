@@ -61,51 +61,51 @@ export class MemStorage implements IStorage {
     // Add mock venues
     const mockVenues = [
       {
-        name: "Riyadh Music Festival",
-        nameAr: "مهرجان الرياض للموسيقى",
-        category: "Entertainment",
+        name: "Soudah Cable Car",
+        nameAr: "تلفريك السودة",
+        category: "entertainment",
         categoryAr: "ترفيه",
-        description: "Annual music festival with international artists",
-        descriptionAr: "مهرجان موسيقي سنوي مع فنانين عالميين",
-        latitude: "24.7136",
-        longitude: "46.6753",
-        address: "King Fahd Cultural Centre, Riyadh",
-        addressAr: "مركز الملك فهد الثقافي، الرياض",
-        phone: "+966112345678",
+        description: "A scenic cable car experience offering breathtaking views of the Asir mountains and valleys.",
+        descriptionAr: "تجربة تلفريك خلابة تقدم إطلالات رائعة على جبال ووديان عسير.",
+        latitude: "18.2383",
+        longitude: "42.3691",
+        address: "Soudah, Asir Region, Saudi Arabia",
+        addressAr: "السودة، منطقة عسير، المملكة العربية السعودية",
+        phone: "+966920000089",
+        rating: "4.7",
+        imageUrl: "https://i.ibb.co/ZRxptFPz/IMG-20250723-WA0069.jpg",
+        isActive: true,
+      },
+      {
+        name: "High City",
+        nameAr: "المدينة العالية",
+        category: "entertainment",
+        categoryAr: "ترفيه",
+        description: "A modern mountaintop destination in Abha offering dining, entertainment, and stunning mountain views.",
+        descriptionAr: "وجهة جبلية عصرية في أبها تقدم المأكولات والترفيه والإطلالات الجبلية الخلابة.",
+        latitude: "18.2165",
+        longitude: "42.5053",
+        address: "High City, King Abdulaziz Road, Abha 62521, Saudi Arabia",
+        addressAr: "المدينة العالية، طريق الملك عبدالعزيز، أبها 62521، المملكة العربية السعودية",
+        phone: "+966172289090",
         rating: "4.8",
-        imageUrl: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f",
+        imageUrl: "https://i.ibb.co/RTSmmLd6/IMG-20250723-WA0072.jpg",
         isActive: true,
       },
       {
-        name: "National Heritage Museum",
-        nameAr: "متحف التراث الوطني",
-        category: "Museum",
-        categoryAr: "متاحف",
-        description: "Explore Saudi Arabia's rich cultural heritage",
-        descriptionAr: "استكشف التراث الثقافي الغني للمملكة العربية السعودية",
-        latitude: "24.6478",
-        longitude: "46.7219",
-        address: "King Abdulaziz Historical Center, Riyadh",
-        addressAr: "مركز الملك عبدالعزيز التاريخي، الرياض",
-        phone: "+966112345679",
-        rating: "4.6",
-        imageUrl: "https://pixabay.com/get/g14a3832ac7902b2313db8c0cac78171d01340726c3e63102b9a0df16922586a20d3c2556626acfbf7049757c931d3ea9d3e9b2bbe19297011a5357d4fbfecc70_1280.jpg",
-        isActive: true,
-      },
-      {
-        name: "Adventure World",
-        nameAr: "عالم المغامرات",
+        name: "Abha Entertainment Carnival",
+        nameAr: "كرنفال أبها الترفيهي",
         category: "Theme Park",
         categoryAr: "ملاهي",
-        description: "Thrilling rides and family entertainment",
-        descriptionAr: "ألعاب مثيرة وترفيه عائلي",
-        latitude: "24.8059",
-        longitude: "46.6545",
-        address: "Al Malqa District, Riyadh",
-        addressAr: "حي الملقا، الرياض",
-        phone: "+966112345680",
-        rating: "4.9",
-        imageUrl: "https://pixabay.com/get/g3b12da663d748773d4d4df6c4a2114d1a596019a910c22a006c38b46a5aed384f969ef649c15491578576e64132138c5940046dc60a7036cbc674eec4d51e86c_1280.jpg",
+        description: "A family-friendly carnival in Abha featuring cultural shows, games, local markets, food trucks, and scenic seating areas.",
+        descriptionAr: "كرنفال ترفيهي عائلي في أبها يشمل فعاليات ثقافية، ألعاب، أسواق شعبية، عربات طعام، وجلسات جبلية.",
+        latitude: "18.2165",
+        longitude: "42.5053",
+        address: "Sama Abha Park & Art Street, Abha, Asir Region, Saudi Arabia",
+        addressAr: "حديقة سما أبها وشارع الفن، أبها، منطقة عسير، المملكة العربية السعودية",
+        phone: "+966920000089",
+        rating: "4.4",
+        imageUrl: "https://i.ibb.co/1GFPWQ6v/SAVE-20250723-201047.jpg",
         isActive: true,
       }
     ];
@@ -115,22 +115,38 @@ export class MemStorage implements IStorage {
       this.venues.set(id, { ...venue, id, createdAt: new Date() });
     });
 
-    // Add mock queues
+    // Add mock queues based on rating thresholds
     this.venues.forEach((venue, venueId) => {
       const queueId = this.currentQueueId++;
+      const rating = parseFloat(venue.rating ?? "0");
+
+      let currentCount: number;
+      let averageWaitTime: number;
+
+      if (rating >= 4.8) {
+        currentCount = 32; 
+        averageWaitTime = Math.floor(currentCount*1.5); 
+      } else if (rating >= 4.5) {
+        currentCount = 13; 
+        averageWaitTime = Math.floor(currentCount*1.5); 
+      } else {
+        currentCount = 7; 
+        averageWaitTime = Math.floor(currentCount*1.5); 
+      }
+
       this.queues.set(queueId, {
         id: queueId,
         venueId: venueId,
         name: "Main Entry",
         nameAr: "الدخول الرئيسي",
         maxCapacity: 100,
-        currentCount: Math.floor(Math.random() * 50),
-        averageWaitTime: Math.floor(Math.random() * 60) + 5,
+        currentCount,
+        averageWaitTime,
         isActive: true,
         createdAt: new Date(),
       });
     });
-  }
+    }
 
   async getUser(id: number): Promise<User | undefined> {
     return this.users.get(id);
