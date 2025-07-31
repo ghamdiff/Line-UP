@@ -73,44 +73,48 @@ export default function Home() {
       </div>
 
       {/* Quick Actions */}
-      <div className="px-4 py-4 bg-white border-b border-gray-100">
+      <div className="px-4 py-4 bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
         <div className="grid grid-cols-4 gap-3">
           <Link href="/search?category=events">
             <Button
               variant="ghost"
-              className="w-full flex flex-col items-center p-3 bg-blue-50 rounded-xl hover:bg-blue-100 h-auto"
+              className="w-full flex flex-col items-center p-3 bg-blue-50 dark:bg-blue-900/30 rounded-xl hover:bg-blue-100 dark:hover:bg-blue-900/50 h-auto"
             >
               <Calendar className="text-primary w-6 h-6 mb-2" />
-              <span className="text-xs font-medium text-gray-700">
-                الفعاليات
+              <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
+                {language === 'ar' ? 'الفعاليات' : 'Events'}
               </span>
             </Button>
           </Link>
           <Link href="/search?category=restaurants">
             <Button
               variant="ghost"
-              className="w-full flex flex-col items-center p-3 bg-green-50 rounded-xl hover:bg-green-100 h-auto"
+              className="w-full flex flex-col items-center p-3 bg-green-50 dark:bg-green-900/30 rounded-xl hover:bg-green-100 dark:hover:bg-green-900/50 h-auto"
             >
               <Utensils className="text-secondary w-6 h-6 mb-2" />
-              <span className="text-xs font-medium text-gray-700">المطاعم</span>
+              <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
+                {language === 'ar' ? 'المطاعم' : 'Restaurants'}
+              </span>
             </Button>
           </Link>
           <Link href="/search?category=tickets">
             <Button
               variant="ghost"
-              className="w-full flex flex-col items-center p-3 bg-amber-50 rounded-xl hover:bg-amber-100 h-auto"
+              className="w-full flex flex-col items-center p-3 bg-amber-50 dark:bg-amber-900/30 rounded-xl hover:bg-amber-100 dark:hover:bg-amber-900/50 h-auto"
             >
               <Ticket className="text-accent w-6 h-6 mb-2" />
-              <span className="text-xs font-medium text-gray-700">التذاكر</span>
+              <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
+                {language === 'ar' ? 'التذاكر' : 'Tickets'}
+              </span>
             </Button>
           </Link>
           <Link href="/search?map=true">
             <Button
               variant="ghost"
-              className="w-full flex flex-col items-center p-3 bg-purple-50 rounded-xl hover:bg-purple-100 h-auto"
+              className="w-full flex flex-col items-center p-3 bg-purple-50 dark:bg-purple-900/30 rounded-xl hover:bg-purple-100 dark:hover:bg-purple-900/50 h-auto"
             >
               <BotMessageSquare className="text-purple-500 w-6 h-6 mb-2" />
-              <span className="text-xs font-medium text-gray-700">AI</span>
+              <span className="text-xs font-medium text-gray-700 dark:text-gray-300">AI</span>
             </Button>
           </Link>
         </div>
