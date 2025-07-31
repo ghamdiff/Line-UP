@@ -38,9 +38,8 @@ export default function BottomNavigation() {
         
         <Link href="/AI tool">
           <Button variant="ghost" className={`flex flex-col items-center py-2 h-auto ${getIconColor("/AI tool")}`}>
-            <span className="text-xs">Can you run the AI tool ?</span>
+            <span className="text-xs">AI</span>
           </Button>
-        </Link>
         
         <Link href="/my-queues">
           <Button variant="ghost" className={`flex flex-col items-center py-2 h-auto relative ${getIconColor("/my-queues")}`}>
