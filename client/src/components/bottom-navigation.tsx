@@ -29,13 +29,21 @@ export default function BottomNavigation() {
           </Button>
         </Link>
         
-        <Link href="/search">
-          <Button variant="ghost" className={`flex flex-col items-center py-2 h-auto ${getIconColor("/search")}`}>
+        <Link href="/ai-tools">
+          <Button variant="ghost" className={`flex flex-col items-center py-2 h-auto rounded-full ${getIconColor("/ai-tools")}`}>
             <Search className="w-5 h-5 mb-1" />
             <span className="text-xs">البحث</span>
           </Button>
         </Link>
-        
+        <Link href="/my-queues">
+          <Button variant="ghost" className={`flex flex-col items-center py-2 h-auto relative ${getIconColor("/my-queues")}`}>
+            <Clock className="w-5 h-5 mb-1" />
+            <span className="text-xs">AI<
+            {activeReservation && (
+              <div className="absolute -top-1 right-1/4 w-2 h-2 bg-red-500 rounded-full"></div>
+            )}
+          </Button>
+        </Link> 
         <Link href="/my-queues">
           <Button variant="ghost" className={`flex flex-col items-center py-2 h-auto relative ${getIconColor("/my-queues")}`}>
             <Clock className="w-5 h-5 mb-1" />
