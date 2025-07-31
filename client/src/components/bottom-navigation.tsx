@@ -21,7 +21,7 @@ export default function BottomNavigation() {
 
   return (
     <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-sm bg-white border-t border-gray-200 z-50">
-      <div className="grid grid-cols-4 py-2">
+      <div className="grid grid-cols-5 py-2">
         <Link href="/">
           <Button variant="ghost" className={`flex flex-col items-center py-2 h-auto ${getIconColor("/")}`}>
             <Home className="w-5 h-5 mb-1" />
@@ -35,6 +35,11 @@ export default function BottomNavigation() {
             <span className="text-xs">البحث</span>
           </Button>
         </Link>
+        
+        <Link href="/AI tool">
+          <Button variant="ghost" className={`flex flex-col items-center py-2 h-auto ${getIconColor("/AI tool")}`}>
+            <span className="text-xs">Can you run the AI tool ?</span>
+          </Button>
         
         <Link href="/my-queues">
           <Button variant="ghost" className={`flex flex-col items-center py-2 h-auto relative ${getIconColor("/my-queues")}`}>
