@@ -19,12 +19,12 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
 
   if (!isVisible) {
     return (
-      <div className="fixed inset-0 bg-gradient-to-br from-primary to-white-600 flex items-center justify-center z-50 transition-opacity duration-300 opacity-0" />
+      <div className="fixed inset-0 bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center z-50 transition-opacity duration-300 opacity-0" />
     );
   }
 
   return (
-    <div className="fixed inset-0 bg-gradient-to-br from-primary to-white-600 flex items-center justify-center z-50 transition-opacity duration-300">
+    <div className="fixed inset-0 bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center z-50 transition-opacity duration-300">
       <div className="text-center text-white">
         
        {/* Logo */}
