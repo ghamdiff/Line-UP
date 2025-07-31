@@ -8,8 +8,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function MyQueues() {
+  const { t, language } = useLanguage();
   const { toast } = useToast();
   const queryClient = useQueryClient();
   
@@ -41,17 +43,24 @@ export default function MyQueues() {
   });
 
   const getStatusBadge = (status: string) => {
+    const statusTexts = {
+      waiting: language === 'ar' ? 'في الانتظار' : 'Waiting',
+      called: language === 'ar' ? 'حان دورك' : 'Your Turn',
+      completed: language === 'ar' ? 'مكتمل' : 'Completed',
+      cancelled: language === 'ar' ? 'ملغي' : 'Cancelled'
+    };
+
     switch (status) {
       case "waiting":
-        return <Badge className="bg-blue-100 text-blue-800 border-blue-200">في الانتظار</Badge>;
+        return <Badge className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 border-blue-200 dark:border-blue-700">{statusTexts.waiting}</Badge>;
       case "called":
-        return <Badge className="bg-green-100 text-green-800 border-green-200">حان دورك</Badge>;
+        return <Badge className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 border-green-200 dark:border-green-700">{statusTexts.called}</Badge>;
       case "completed":
-        return <Badge className="bg-gray-100 text-gray-800 border-gray-200">مكتمل</Badge>;
+        return <Badge className="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 border-gray-200 dark:border-gray-600">{statusTexts.completed}</Badge>;
       case "cancelled":
-        return <Badge className="bg-red-100 text-red-800 border-red-200">ملغي</Badge>;
+        return <Badge className="bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 border-red-200 dark:border-red-700">{statusTexts.cancelled}</Badge>;
       default:
-        return <Badge>{status}</Badge>;
+        return <Badge className="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">{status}</Badge>;
     }
   };
 
@@ -69,13 +78,13 @@ export default function MyQueues() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-20">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pb-20">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 px-4 py-3">
+      <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3">
         <div className="flex items-center gap-3">
           <Link href="/">
           </Link>
-          <h1 className="text-lg font-semibold text-gray-900">طوابيري</h1>
+          <h1 className="text-lg font-semibold text-gray-900 dark:text-white">{t('myQueues')}</h1>
         </div>
       </div>
 
@@ -89,23 +98,29 @@ export default function MyQueues() {
           </div>
         ) : reservations?.length === 0 ? (
           <div className="text-center py-8">
-            <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Clock className="w-8 h-8 text-gray-400" />
+            <div className="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Clock className="w-8 h-8 text-gray-400 dark:text-gray-500" />
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">لا توجد طوابير</h3>
-            <p className="text-gray-500 mb-4">لم تنضم إلى أي طابور بعد</p>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+              {language === 'ar' ? 'لا توجد طوابير' : 'No Queues'}
+            </h3>
+            <p className="text-gray-500 dark:text-gray-400 mb-4">
+              {language === 'ar' ? 'لم تنضم إلى أي طابور بعد' : 'You haven\'t joined any queues yet'}
+            </p>
             <Link href="/search">
               <Button className="bg-primary text-white">
-                استكشف الأماكن
+                {language === 'ar' ? 'استكشف الأماكن' : 'Explore Places'}
               </Button>
             </Link>
           </div>
         ) : (
           <div className="space-y-4">
-            <h2 className="text-lg font-bold text-gray-900">طوابيري الحالية</h2>
+            <h2 className="text-lg font-bold text-gray-900 dark:text-white">
+              {language === 'ar' ? 'طوابيري الحالية' : 'Current Queues'}
+            </h2>
             
             {reservations?.map((reservation) => (
-              <Card key={reservation.id} className="bg-white border border-gray-200 overflow-hidden">
+              <Card key={reservation.id} className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 overflow-hidden">
                 <CardContent className="p-4">
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex-1">

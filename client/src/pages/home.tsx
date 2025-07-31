@@ -52,23 +52,23 @@ export default function Home() {
           <Button
             variant="ghost"
             size="sm"
-            className="p-2 bg-gray-100 rounded-full relative"
+            className="p-2 bg-gray-100 dark:bg-gray-700 rounded-full relative"
           >
-            <Bell className="w-5 h-5 text-gray-600" />
+            <Bell className="w-5 h-5 text-gray-600 dark:text-gray-300" />
             <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
           </Button>
         </div>
       </div>
 
       {/* Search Bar */}
-      <div className="px-4 py-3 bg-white border-b border-gray-100">
+      <div className="px-4 py-3 bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
         <div className="relative">
           <Input
             type="text"
-            placeholder="ابحث عن الأماكن والفعاليات..."
-            className="w-full pr-10 pl-4 py-3 bg-gray-100 rounded-xl border-0 focus:ring-2 focus:ring-primary focus:bg-white text-right"
+            placeholder={language === 'ar' ? 'ابحث عن الأماكن والفعاليات...' : 'Search for places and events...'}
+            className="w-full pr-10 pl-4 py-3 bg-gray-100 dark:bg-gray-700 rounded-xl border-0 focus:ring-2 focus:ring-primary focus:bg-white dark:focus:bg-gray-600 text-right dark:text-white"
           />
-          <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+          <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 dark:text-gray-500" />
         </div>
       </div>
 

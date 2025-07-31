@@ -4,13 +4,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Globe } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Login() {
   const [, setLocation] = useLocation();
   const { login } = useAuth();
-  const { t } = useLanguage();
+  const { t, language, toggleLanguage } = useLanguage();
   const [formData, setFormData] = useState({
     email: "",
     password: ""
@@ -35,6 +36,23 @@ export default function Login() {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-4">
       <Card className="w-full max-w-md bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
         <CardHeader className="text-center">
+          {/* Logo Placeholder */}
+          <div className="mb-6 flex justify-center">
+            <div className="w-24 h-24 bg-primary rounded-xl flex items-center justify-center">
+              <div className="w-16 h-16 bg-white dark:bg-gray-800 rounded-lg flex items-center justify-center">
+                <span className="text-primary font-bold text-xl">Q</span>
+              </div>
+            </div>
+          </div>
+          
+          {/* Language Toggle */}
+          <div className="absolute top-4 left-4">
+            <Button variant="outline" size="sm" onClick={toggleLanguage} className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300">
+              <Globe className="w-4 h-4 mr-1" />
+              {language === 'ar' ? 'EN' : 'عر'}
+            </Button>
+          </div>
+
           <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
             {t('welcomeToQueue')}
           </CardTitle>

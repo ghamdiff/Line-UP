@@ -21,8 +21,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   });
 
   const login = (email: string, password: string) => {
-    // Extract name from email (part before @)
-    const name = email.includes('@') ? email.split('@')[0] : email;
+    // Extract name from email (part before @) or use user1234 for phone numbers
+    const name = email.includes('@') ? email.split('@')[0] : 'user1234';
     const userData = { email, name };
     setUser(userData);
     localStorage.setItem('user', JSON.stringify(userData));

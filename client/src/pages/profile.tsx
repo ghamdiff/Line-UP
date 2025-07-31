@@ -61,7 +61,7 @@ export default function Profile() {
               </p>
             </CardContent>
           </Card>
-          
+
           <Card className="text-center bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
             <CardContent className="p-4">
               <div className="w-8 h-8 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-2">
@@ -73,7 +73,7 @@ export default function Profile() {
               </p>
             </CardContent>
           </Card>
-          
+
           <Card className="text-center bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
             <CardContent className="p-4">
               <div className="w-8 h-8 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mx-auto mb-2">
