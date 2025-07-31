@@ -7,11 +7,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
+import { useLanguage } from "@/contexts/LanguageContext";
 import type { Venue, Queue } from "@shared/schema";
 
 export default function VenueDetail() {
   const params = useParams();
   const venueId = parseInt(params.id as string);
+  const { t, language } = useLanguage();
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [selectedQueue, setSelectedQueue] = useState<number | null>(null);
@@ -61,9 +63,15 @@ export default function VenueDetail() {
     const count = currentCount || 0;
     const capacity = maxCapacity || 100;
     const percentage = (count / capacity) * 100;
-    if (percentage < 10) return "طابور قصير";
-    if (percentage < 30) return "طابور متوسط";
-    return "طابور طويل";
+    if (language === 'ar') {
+      if (percentage < 10) return "طابور قصير";
+      if (percentage < 30) return "طابور متوسط";
+      return "طابور طويل";
+    } else {
+      if (percentage < 10) return "Short queue";
+      if (percentage < 30) return "Medium queue";
+      return "Long queue";
+    }
   };
 
   const handleJoinQueue = (queueId: number) => {
@@ -75,22 +83,22 @@ export default function VenueDetail() {
 
   if (venueLoading || !venue) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <div className="bg-white border-b border-gray-200 px-4 py-3">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+        <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3">
           <div className="flex items-center gap-3">
             <Link href="/">
               <Button variant="ghost" size="sm" className="p-2">
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRight className="w-5 h-5 text-gray-600 dark:text-gray-300" />
               </Button>
             </Link>
-            <div className="w-32 h-6 bg-gray-200 rounded shimmer"></div>
+            <div className="w-32 h-6 bg-gray-200 dark:bg-gray-700 rounded shimmer"></div>
           </div>
         </div>
         <div className="px-4 py-4 space-y-4">
-          <div className="w-full h-48 bg-gray-200 rounded-xl shimmer"></div>
+          <div className="w-full h-48 bg-gray-200 dark:bg-gray-700 rounded-xl shimmer"></div>
           <div className="space-y-2">
-            <div className="w-3/4 h-6 bg-gray-200 rounded shimmer"></div>
-            <div className="w-1/2 h-4 bg-gray-200 rounded shimmer"></div>
+            <div className="w-3/4 h-6 bg-gray-200 dark:bg-gray-700 rounded shimmer"></div>
+            <div className="w-1/2 h-4 bg-gray-200 dark:bg-gray-700 rounded shimmer"></div>
           </div>
         </div>
       </div>
@@ -98,16 +106,18 @@ export default function VenueDetail() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-20">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pb-20">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 px-4 py-3">
+      <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3">
         <div className="flex items-center gap-3">
           <Link href="/">
             <Button variant="ghost" size="sm" className="p-2">
-              <ArrowRight className="w-5 h-5" />
+              <ArrowRight className="w-5 h-5 text-gray-600 dark:text-gray-300" />
             </Button>
           </Link>
-          <h1 className="text-lg font-semibold text-gray-900">تفاصيل المكان</h1>
+          <h1 className="text-lg font-semibold text-gray-900 dark:text-white">
+            {language === 'ar' ? 'تفاصيل المكان' : 'Venue Details'}
+          </h1>
         </div>
       </div>
 
@@ -115,7 +125,7 @@ export default function VenueDetail() {
       <div className="relative">
         <img
           src={venue.imageUrl || "/api/placeholder/400/200"}
-          alt={venue.nameAr}
+          alt={language === 'ar' ? venue.nameAr : venue.name}
           className="w-full h-48 object-cover"
         />
         <div className="absolute bottom-4 right-4">
@@ -127,23 +137,33 @@ export default function VenueDetail() {
       </div>
 
       {/* Venue Info */}
-      <div className="px-4 py-4 bg-white border-b border-gray-100">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">{venue.nameAr}</h1>
-        <p className="text-gray-600 mb-3">{venue.categoryAr}</p>
+      <div className="px-4 py-4 bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+          {language === 'ar' ? venue.nameAr : venue.name}
+        </h1>
+        <p className="text-gray-600 dark:text-gray-400 mb-3">
+          {language === 'ar' ? venue.categoryAr : venue.category}
+        </p>
         
         <div className="flex items-center gap-2 mb-3">
-          <MapPin className="w-4 h-4 text-gray-400" />
-          <span className="text-sm text-gray-600">{venue.addressAr}</span>
+          <MapPin className="w-4 h-4 text-gray-400 dark:text-gray-500" />
+          <span className="text-sm text-gray-600 dark:text-gray-400">
+            {language === 'ar' ? venue.addressAr : venue.address}
+          </span>
         </div>
 
-        {venue.descriptionAr && (
-          <p className="text-gray-700 leading-relaxed">{venue.descriptionAr}</p>
+        {(language === 'ar' ? venue.descriptionAr : venue.description) && (
+          <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+            {language === 'ar' ? venue.descriptionAr : venue.description}
+          </p>
         )}
       </div>
 
       {/* Queue Information */}
       <div className="px-4 py-4">
-        <h2 className="text-lg font-bold text-gray-900 mb-4">الطوابير المتاحة</h2>
+        <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
+          {language === 'ar' ? 'الطوابير المتاحة' : 'Available Queues'}
+        </h2>
         
         {queuesLoading ? (
           <div className="space-y-3">

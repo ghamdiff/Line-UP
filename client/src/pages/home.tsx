@@ -128,13 +128,15 @@ export default function Home() {
       {/* Popular Venues */}
       <div className="px-4 py-4">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-bold text-gray-900">الأماكن المشهورة</h2>
+          <h2 className="text-lg font-bold text-gray-900 dark:text-white">
+            {language === 'ar' ? 'الأماكن المشهورة' : 'Popular Places'}
+          </h2>
           <Link href="/search">
             <Button
               variant="ghost"
               className="text-primary font-medium text-sm"
             >
-              عرض الكل
+              {language === 'ar' ? 'عرض الكل' : 'View All'}
             </Button>
           </Link>
         </div>
