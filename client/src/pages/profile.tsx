@@ -7,6 +7,7 @@ import {
   Moon,
   Sun,
   Globe,
+  X,
   LogOut,
 } from "lucide-react";
 import { Link } from "wouter";
@@ -33,11 +34,10 @@ export default function Profile() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pb-20">
-
       {/* Profile Info */}
       <div className="px-4 py-6 bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
         <div className="flex items-center gap-4">
-          <Avatar className="w-16 h-16">
+          <Avatar className="w-16 h-16"st>
             <AvatarFallback className="bg-primary text-white text-xl font-semibold">
               {avatarLetter}
             </AvatarFallback>
@@ -60,7 +60,7 @@ export default function Profile() {
                 <Clock className="w-4 h-4 text-blue-600 dark:text-blue-400" />
               </div>
               <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                24
+                23
               </p>
               <p className="text-xs text-gray-500 dark:text-gray-400">
                 {language === "ar" ? "طابور مكتمل" : "Completed Queues"}
@@ -70,14 +70,14 @@ export default function Profile() {
 
           <Card className="text-center bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
             <CardContent className="p-4">
-              <div className="w-8 h-8 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-2">
-                <Star className="w-4 h-4 text-green-600 dark:text-green-400" />
+              <div className="w-8 h-8 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center mx-auto mb-2">
+                <X className="w-4 h-4 text-red-600 dark:text-red-400" />
               </div>
               <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                4.8
+                7
               </p>
               <p className="text-xs text-gray-500 dark:text-gray-400">
-                {language === "ar" ? "متوسط التقييم" : "Average Rating"}
+                {language === "ar" ? "طابور ملغي" : "Cancelled Queues"}
               </p>
             </CardContent>
           </Card>
