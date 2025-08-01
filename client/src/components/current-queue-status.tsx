@@ -67,15 +67,15 @@ export default function CurrentQueueStatus({ reservation }: CurrentQueueStatusPr
           <p className="text-xs opacity-90">مكانك في الطابور</p>
         </div>
       </div>
-      
+
       <div className="mt-3">
-        <QueueTimer 
+        <QueueTimer
           estimatedWaitTime={reservation.estimatedWaitTime || 25}
           createdAt={reservation.createdAt}
         />
         <div className="mt-3 w-full bg-white bg-opacity-30 rounded-full h-2">
-          <div 
-            className="bg-white h-2 rounded-full transition-all duration-300" 
+          <div
+            className="bg-white h-2 rounded-full transition-all duration-300"
             style={{ width: `${progressPercentage}%` }}
           ></div>
         </div>

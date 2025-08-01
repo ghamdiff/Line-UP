@@ -23,7 +23,7 @@ import type { Venue } from "@shared/schema";
 export default function Home() {
   const { user } = useAuth();
   const { t, language } = useLanguage();
-  
+
   const { data: venues, isLoading } = useQuery<Venue[]>({
     queryKey: ["/api/venues"],
   });
@@ -40,8 +40,8 @@ export default function Home() {
             <Building2 className="text-primary w-5 h-5" />
             <div>
               <p className="font-semibold text-gray-900 dark:text-white">
-                {language === 'ar' 
-                  ? `مرحبًا ${user?.name || 'بك'} في أبها!` 
+                {language === 'ar'
+                  ? `مرحبًا ${user?.name || 'بك'} في أبها!`
                   : `Welcome ${user?.name || ''} to Abha!`}
               </p>
               <p className="text-sm text-gray-500 dark:text-gray-400">

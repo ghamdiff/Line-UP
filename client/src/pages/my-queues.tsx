@@ -14,7 +14,7 @@ export default function MyQueues() {
   const { t, language } = useLanguage();
   const { toast } = useToast();
   const queryClient = useQueryClient();
-  
+
   const { data: reservations, isLoading } = useQuery<any[]>({
     queryKey: ["/api/reservations/user/1"],
   });
@@ -118,7 +118,7 @@ export default function MyQueues() {
             <h2 className="text-lg font-bold text-gray-900 dark:text-white">
               {language === 'ar' ? 'طوابيري الحالية' : 'Current Queues'}
             </h2>
-            
+
             {reservations?.map((reservation) => (
               <Card key={reservation.id} className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 overflow-hidden">
                 <CardContent className="p-4">
@@ -145,13 +145,13 @@ export default function MyQueues() {
 
                   {reservation.status === "waiting" && (
                     <div className="mb-3">
-                      <QueueTimer 
+                      <QueueTimer
                         estimatedWaitTime={reservation.estimatedWaitTime || 25}
                         createdAt={reservation.createdAt}
                       />
                       <div className="w-full bg-gray-200 rounded-full h-2 mt-3">
-                        <div 
-                          className="bg-primary h-2 rounded-full" 
+                        <div
+                          className="bg-primary h-2 rounded-full"
                           style={{ width: `${Math.max(20, 100 - (reservation.position * 5))}%` }}
                         ></div>
                       </div>
@@ -164,9 +164,9 @@ export default function MyQueues() {
                     </p>
                     <div className="flex items-center gap-2">
                       {reservation.status === "waiting" && (
-                        <Button 
-                          variant="ghost" 
-                          size="sm" 
+                        <Button
+                          variant="ghost"
+                          size="sm"
                           onClick={() => leaveMutation.mutate(reservation.id)}
                           disabled={leaveMutation.isPending}
                           className="text-red-600 hover:bg-red-50 p-2 h-auto"

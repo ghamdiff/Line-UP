@@ -26,19 +26,19 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
   return (
     <div className="fixed inset-0 bg-gradient-to-br from-primary to-white-600 flex items-center justify-center z-50 transition-opacity duration-300">
       <div className="text-center text-white">
-        
-       {/* Logo */}
+
+        {/* Logo */}
         <div className="m-8 animate-pulse">
           <div className="w-48 h-48 bg-transparent rounded-xl flex items-center justify-center mx-auto mb-7 shadow-s">
             <img src="https://i.ibb.co/gM9PVx8s/bd9cd335-452e-45bc-b61a-3dfd063ea85a.png" alt="Logo" className="w-48 h-48 rounded-xl" />
           </div>
-          
+
           {/* App Name */}
           <h1
             className="text-3xl font-bold mb-2"
             style={{ fontFamily: "Cairo, Arial, sans-serif" }}
           >
-            
+
           </h1>
           <p className="text-lg opacity-90"></p>
         </div>

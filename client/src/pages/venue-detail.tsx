@@ -144,7 +144,7 @@ export default function VenueDetail() {
         <p className="text-gray-600 dark:text-gray-400 mb-3">
           {language === 'ar' ? venue.categoryAr : venue.category}
         </p>
-        
+
         <div className="flex items-center gap-2 mb-3">
           <MapPin className="w-4 h-4 text-gray-400 dark:text-gray-500" />
           <span className="text-sm text-gray-600 dark:text-gray-400">
@@ -164,7 +164,7 @@ export default function VenueDetail() {
         <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
           {language === 'ar' ? 'الطوابير المتاحة' : 'Available Queues'}
         </h2>
-        
+
         {queuesLoading ? (
           <div className="space-y-3">
             {[1, 2].map((i) => (
@@ -214,10 +214,10 @@ export default function VenueDetail() {
                       </Button>
                     </div>
                   </div>
-                  
+
                   <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div 
-                      className="bg-primary h-2 rounded-full transition-all duration-300" 
+                    <div
+                      className="bg-primary h-2 rounded-full transition-all duration-300"
                       style={{ width: `${((queue.currentCount || 0) / (queue.maxCapacity || 100)) * 100}%` }}
                     ></div>
                   </div>
