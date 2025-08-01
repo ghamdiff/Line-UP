@@ -217,17 +217,28 @@ export default function VenueDetail() {
               </tr>
             </thead>
             <tbody>
-              {/* Dynamic rows based on pros array */}
-              {(venue.pros as string[] || []).map((pro: string, index: number) => (
-                <tr key={index} className="border-t border-gray-200 dark:border-gray-700">
-                  <td className="bg-green-50/50 dark:bg-green-950/20 px-4 py-3 text-sm text-gray-700 dark:text-gray-300 border-r border-gray-200 dark:border-gray-700">
-                    {pro}
-                  </td>
-                  <td className="bg-red-50/50 dark:bg-red-950/20 px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
-                    {(venue.cons as string[] || [])[index] || ""}
-                  </td>
-                </tr>
-              ))}
+              {/* Dynamic rows based on pros array - shows Arabic when language is 'ar', English otherwise */}
+              {(() => {
+                const prosData = venue.pros as any;
+                const consData = venue.cons as any;
+                const currentPros = language === 'ar' 
+                  ? (prosData?.ar || []) 
+                  : (prosData?.en || []);
+                const currentCons = language === 'ar' 
+                  ? (consData?.ar || []) 
+                  : (consData?.en || []);
+                
+                return currentPros.map((pro: string, index: number) => (
+                  <tr key={index} className="border-t border-gray-200 dark:border-gray-700">
+                    <td className="bg-green-50/50 dark:bg-green-950/20 px-4 py-3 text-sm text-gray-700 dark:text-gray-300 border-r border-gray-200 dark:border-gray-700">
+                      {pro}
+                    </td>
+                    <td className="bg-red-50/50 dark:bg-red-950/20 px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
+                      {currentCons[index] || ""}
+                    </td>
+                  </tr>
+                ));
+              })()}
             </tbody>
           </table>
         </div>

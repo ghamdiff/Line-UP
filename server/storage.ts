@@ -102,19 +102,36 @@ export class MemStorage implements IStorage {
         rating: "4.7",
         imageUrl: "https://i.ibb.co/ZRxptFPz/IMG-20250723-WA0069.jpg",
         isActive: true,
-        pros: [
-          "Breathtaking Scenic Views: Reviewers consistently highlight the stunning aerial views of the mountains, valleys, and the city.	",
-          "Unique Experience: Offers a distinct way to experience the natural beauty of the Abha region.",
-          "Connection to Nature: Provides access to natural attractions like Soudah Mountain and Aseer National Park.",
-          "Good for Photography: Many users mention it as a great spot for taking beautiful pictures.",
-        ], // Add your pros here
-        cons: [
-          "Operational Issues/Closures: Some reviews mention facilities being closed or staff being on leave, leading to disappointment.",
-          "Limited Information/Signage: Information, especially in English, can be lacking or poorly translated.",
-          "Weather Dependency: The experience can be affected by weather conditions, such as fog obscuring the views.",
-          "Potential for Chilly Weather: It can get quite cold at the top of the mountain.",
-        ], // Add your cons here
-      },
+        "pros": {
+          "ar": [
+            "مناظر طبيعية خلابة: يبرز المراجعون الإطلالات الجوية المذهلة للجبال والوديان والمدينة.",
+            "تجربة فريدة: يقدم طريقة مميزة لتجربة الجمال الطبيعي لمنطقة أبها.",
+            "اتصال بالطبيعة: يوفر إمكانية الوصول إلى المعالم الطبيعية مثل جبل السودة ومنتزه عسير الوطني.",
+            "مناسب للتصوير الفوتوغرافي: يذكره العديد من المستخدمين كمكان رائع لالتقاط صور جميلة."
+          ],
+          "en": [
+            "Breathtaking Scenic Views: Reviewers consistently highlight the stunning aerial views of the mountains, valleys, and the city.",
+            "Unique Experience: Offers a distinct way to experience the natural beauty of the Abha region.",
+            "Connection to Nature: Provides access to natural attractions like Soudah Mountain and Aseer National Park.",
+            "Good for Photography: Many users mention it as a great spot for taking beautiful pictures."
+          ]
+        },
+        "cons": {
+          "ar": [
+            "مشاكل تشغيلية/إغلاقات: يذكر بعض المراجعين إغلاق المرافق أو إجازات الموظفين.",
+            "نقص المعلومات/اللافتات: قد تكون المعلومات، خاصة باللغة الإنجليزية، قليلة أو مترجمة بشكل سيء.",
+            "الاعتماد على الطقس: قد تتأثر التجربة بظروف الطقس، مثل الضباب الذي يحجب الرؤية.",
+            "احتمال برودة الطقس: قد يصبح الجو باردًا جدًا في قمة الجبل."
+          ],
+          "en": [
+            "Operational Issues/Closures: Some reviews mention facilities being closed or staff being on leave, leading to disappointment.",
+            "Limited Information/Signage: Information, especially in English, can be lacking or poorly translated.",
+            "Weather Dependency: The experience can be affected by weather conditions, such as fog obscuring the views.",
+            "Potential for Chilly Weather: It can get quite cold at the top of the mountain."
+          ]
+        }
+        },
+
       {
         name: "High City",
         nameAr: "المدينة العالية",
@@ -133,20 +150,37 @@ export class MemStorage implements IStorage {
         rating: "4.8",
         imageUrl: "https://i.ibb.co/RTSmmLd6/IMG-20250723-WA0072.jpg",
         isActive: true,
-        pros: [
-          "Stunning Panoramic Views: Offers incredible views of Abha city and the surrounding mountains, especially at night.",
-          "Cooler Climate: Due to its high altitude, it provides a milder and more pleasant temperature compared to other parts of Saudi Arabia.",
-          "Pleasant Atmosphere: Described as a peaceful and relaxing place to spend time, with fresh air.",
-          "Variety of Facilities: Features numerous cafes, restaurants, gift shops, and walking paths.",
-          "Family-Friendly: Offers amenities like golf carts for easier movement, making it suitable for children and the elderly.",
-        ], // Add your pros here
-        cons: [
-          "Family-Friendly: Offers amenities like golf carts for easier movement, making it suitable for children and the elderly.",
-          "Parking Difficulties: Several reviews mention that car parking can be challenging.",
-          "Expensive Food Stalls: Some visitors find the food and coffee shops to be on the pricier side, leading some families to bring their own snacks.",
-          'Fog can obscure views: While fog can add to the "different world" feel, it can also completely hide the views at times.',
-        ], // Add your cons here
-      },
+          "pros": {
+            "ar": [
+              "إطلالات بانورامية مذهلة: توفر مناظر رائعة لمدينة أبها والجبال المحيطة، خاصة في الليل.",
+              "طقس أكثر برودة: بفضل ارتفاعه، يوفر درجة حرارة معتدلة وممتعة.",
+              "أجواء ممتعة: يوصف بأنه مكان هادئ ومريح لقضاء الوقت، مع هواء نقي.",
+              "تنوع المرافق: يضم العديد من المقاهي والمطاعم ومحلات الهدايا وممرات المشي.",
+              "مناسب للعائلات: يوفر وسائل راحة مثل عربات الجولف لتسهيل التنقل."
+            ],
+            "en": [
+              "Stunning Panoramic Views: Offers incredible views of Abha city and the surrounding mountains, especially at night.",
+              "Cooler Climate: Due to its high altitude, it provides a milder and more pleasant temperature.",
+              "Pleasant Atmosphere: Described as a peaceful and relaxing place to spend time, with fresh air.",
+              "Variety of Facilities: Features numerous cafes, restaurants, gift shops, and walking paths.",
+              "Family-Friendly: Offers amenities like golf carts for easier movement, making it suitable for children and the elderly."
+            ]
+          },
+          "cons": {
+            "ar": [
+              "مزدحم بعد الساعة 3 مساءً: قد يصبح المكان مزدحمًا للغاية، خاصة في فترة ما بعد الظهر.",
+              "صعوبة في مواقف السيارات: يذكر العديد من المراجعين أن مواقف السيارات قد تكون صعبة.",
+              "أكشاك طعام باهظة الثمن: يجد بعض الزوار أن أسعار الأطعمة ومحلات القهوة باهظة الثمن.",
+              "الضباب يمكن أن يحجب الرؤية: بينما يمكن أن يضيف الضباب شعورًا 'بالعالم المختلف'، فإنه يمكن أن يحجب الرؤية تمامًا."
+            ],
+            "en": [
+              "Crowded after 3 PM: The place can get very busy, particularly in the afternoons.",
+              "Parking Difficulties: Several reviews mention that car parking can be challenging.",
+              "Expensive Food Stalls: Some visitors find the food and coffee shops to be on the pricier side.",
+              "Fog can obscure views: While fog can add to the 'different world' feel, it can also completely hide the views at times."
+            ]
+          }
+        },
       {
         name: "Abha Entertainment Carnival",
         nameAr: "كرنفال أبها الترفيهي",
@@ -165,24 +199,43 @@ export class MemStorage implements IStorage {
         rating: "4.4",
         imageUrl: "https://i.ibb.co/1GFPWQ6v/SAVE-20250723-201047.jpg",
         isActive: true,
-        pros: [
-          "Variety of Attractions: Reviewers praise the diverse range of activities, including traditional amusement rides (Ferris wheel, roller coasters, bumper cars), playgrounds, and a boating lake.",
-          "Green Spaces & Nature: The park is noted for its beautiful green areas, flower gardens, and walking paths, offering a pleasant environment for relaxation and picnics.",
-          "Family-Friendly: Many reviews highlight it as an excellent destination for families with children, offering entertainment options for various age groups.",
-          "Affordable Entertainment: Compared to other entertainment options, some visitors find it to be a reasonably priced place for a day out.",
-          "Good for Relaxation & Picnics: Beyond the rides, it's also appreciated as a peaceful place for strolls, enjoying the scenery, and having picnics with family and friends.",
-          "Accessible Amenities: The park provides amenities like prayer places, kiosks, footpaths, and in some mentions, facilities for those with special needs (e.g., wheelchairs, baby pushchairs).",
-        ], // Add your pros here
-        cons: [
-          "Maintenance/Cleanliness Issues: Some reviews mention that the park's facilities, including rides and restrooms, could benefit from better maintenance and cleanliness.",
-          "Crowding: Especially during peak times (evenings, weekends, holidays), the park can become very crowded, leading to long queues for rides and difficulty finding seating.",
-          "Ride Availability/Safety Concerns: A few reviews express concerns about certain rides being out of order or perceived safety issues, though this is not a widespread complaint.",
-          "Limited Food Options/Quality: While there are kiosks and restaurants, some reviewers are not entirely satisfied with the variety or quality of the food and beverage options, with some suggesting bringing your own.",
-          "Discrepancies in Operating Hours: There can be some confusion or variability in actual operating hours for rides or specific sections of the park, differing from stated 24/7 park access. (Note: While the park itself might be open 24/7, rides and specific facilities have limited operational hours).",
-        ], // Add your cons here
-      },
-    ];
-
+    "pros": {
+      "ar": [
+        "تنوع مناطق الجذب: يثني المراجعون على التنوع الواسع للأنشطة، بما في ذلك ألعاب الملاهي التقليدية ومناطق اللعب وبحيرة القوارب.",
+        "مساحات خضراء وطبيعة: يتميز المنتزه بمساحاته الخضراء الجميلة، وحدائق الزهور، وممرات المشي.",
+        "مناسب للعائلات: يبرزه العديد من المراجعين كوجهة ممتازة للعائلات التي لديها أطفال.",
+        "ترفيه بأسعار معقولة: يجد بعض الزوار أنه مكان بأسعار معقولة لقضاء يوم ممتع.",
+        "مناسب للاسترخاء والنزهات: يُقدر أيضًا كمكان هادئ للتنزه والاستمتاع بالمناظر وعمل النزهات.",
+        "مرافق ميسرة: يوفر المنتزه مرافق مثل أماكن للصلاة وأكشاك وممرات للمشاة."
+      ],
+      "en": [
+        "Variety of Attractions: Reviewers praise the diverse range of activities, including traditional amusement rides, playgrounds, and a boating lake.",
+        "Green Spaces & Nature: The park is noted for its beautiful green areas, flower gardens, and walking paths.",
+        "Family-Friendly: Many reviews highlight it as an excellent destination for families with children.",
+        "Affordable Entertainment: Compared to other options, some visitors find it to be a reasonably priced place for a day out.",
+        "Good for Relaxation & Picnics: Beyond the rides, it's also appreciated as a peaceful place for strolls, enjoying the scenery, and having picnics.",
+        "Accessible Amenities: The park provides amenities like prayer places, kiosks, footpaths, and facilities for those with special needs."
+      ]
+    },
+    "cons": {
+      "ar": [
+        "مشاكل في الصيانة/النظافة: يذكر بعض المراجعين أن مرافق المنتزه، بما في ذلك الألعاب ودورات المياه، يمكن أن تستفيد من صيانة ونظافة أفضل.",
+        "الازدحام: خاصة خلال أوقات الذروة، يمكن أن يصبح المنتزه مزدحمًا للغاية، مما يؤدي إلى طوابير طويلة.",
+        "توفر الألعاب/مخاوف تتعلق بالسلامة: يعبر عدد قليل من المراجعين عن مخاوف بشأن تعطل بعض الألعاب أو وجود مشكلات تتعلق بالسلامة.",
+        "خيارات طعام محدودة/جودة: بعض المراجعين غير راضين تمامًا عن تنوع أو جودة خيارات الطعام والمشروبات.",
+        "تباين في ساعات العمل: قد يكون هناك بعض الالتباس أو التباين في ساعات العمل الفعلية للألعاب أو أقسام معينة."
+      ],
+      "en": [
+        "Maintenance/Cleanliness Issues: Some reviews mention that the park's facilities, including rides and restrooms, could benefit from better maintenance and cleanliness.",
+        "Crowding: Especially during peak times, the park can become very crowded, leading to long queues for rides and difficulty finding seating.",
+        "Ride Availability/Safety Concerns: A few reviews express concerns about certain rides being out of order or perceived safety issues.",
+        "Limited Food Options/Quality: While there are kiosks and restaurants, some reviewers are not entirely satisfied with the variety or quality of the food and beverage options.",
+        "Discrepancies in Operating Hours: There can be some confusion or variability in actual operating hours for rides or specific sections of the park."
+      ]
+    }
+  }
+]
+      
     mockVenues.forEach((venue) => {
       const id = this.currentVenueId++;
       this.venues.set(id, { ...venue, id, createdAt: new Date() });
