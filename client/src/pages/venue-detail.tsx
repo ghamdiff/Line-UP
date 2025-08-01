@@ -203,47 +203,7 @@ export default function VenueDetail() {
         )}
       </div>
 
-      {/* Pros and Cons Table */}
-      <div className="px-4 py-4 bg-white dark:bg-gray-800">
-        <div className="overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700">
-          <table className="w-full">
-            <thead>
-              <tr>
-                <th className="w-1/2 bg-green-50 dark:bg-green-900/20 px-4 py-3 text-left text-sm font-semibold text-green-800 dark:text-green-400 border-r border-gray-200 dark:border-gray-700">
-                  {language === "ar" ? "الإيجابيات" : "Pros"}
-                </th>
-                <th className="w-1/2 bg-red-50 dark:bg-red-900/20 px-4 py-3 text-left text-sm font-semibold text-red-800 dark:text-red-400">
-                  {language === "ar" ? "السلبيات" : "Cons"}
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* Dynamic rows based on pros array - shows Arabic when language is 'ar', English otherwise */}
-              {(() => {
-                const prosData = venue.pros as any;
-                const consData = venue.cons as any;
-                const currentPros = language === 'ar' 
-                  ? (prosData?.ar || []) 
-                  : (prosData?.en || []);
-                const currentCons = language === 'ar' 
-                  ? (consData?.ar || []) 
-                  : (consData?.en || []);
-                
-                return currentPros.map((pro: string, index: number) => (
-                  <tr key={index} className="border-t border-gray-200 dark:border-gray-700">
-                    <td className="bg-green-50/50 dark:bg-green-950/20 px-4 py-3 text-sm text-gray-700 dark:text-gray-300 border-r border-gray-200 dark:border-gray-700">
-                      {pro}
-                    </td>
-                    <td className="bg-red-50/50 dark:bg-red-950/20 px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
-                      {currentCons[index] || ""}
-                    </td>
-                  </tr>
-                ));
-              })()}
-            </tbody>
-          </table>
-        </div>
-      </div>
+
         
       {/* Queue Information */}
       <div className="px-4 py-4">
