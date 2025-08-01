@@ -30,6 +30,8 @@ export default function Home() {
 
   const { data: activeReservation } = useQuery<any>({
     queryKey: ["/api/reservations/active/1"],
+    refetchInterval: 5000, // Auto-refresh every 5 seconds for real-time updates
+    refetchOnWindowFocus: true, // Refresh when user returns to tab
   });
 
   return (
@@ -80,7 +82,7 @@ export default function Home() {
               variant="ghost"
               className="w-full flex flex-col items-center p-3 bg-blue-50 dark:bg-blue-900/30 rounded-xl hover:bg-blue-100 dark:hover:bg-blue-900/50 h-auto"
             >
-              <Calendar className="text-primary w-6 h-6 mb-2" />
+              <Calendar className="text-blue-500 w-6 h-6 mb-2" />
               <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
                 {language === 'ar' ? 'الفعاليات' : 'Events'}
               </span>
@@ -91,7 +93,7 @@ export default function Home() {
               variant="ghost"
               className="w-full flex flex-col items-center p-3 bg-green-50 dark:bg-green-900/30 rounded-xl hover:bg-green-100 dark:hover:bg-green-900/50 h-auto"
             >
-              <Utensils className="text-secondary w-6 h-6 mb-2" />
+              <Utensils className="text-green-500 w-6 h-6 mb-2" />
               <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
                 {language === 'ar' ? 'المطاعم' : 'Restaurants'}
               </span>
@@ -102,7 +104,7 @@ export default function Home() {
               variant="ghost"
               className="w-full flex flex-col items-center p-3 bg-amber-50 dark:bg-amber-900/30 rounded-xl hover:bg-amber-100 dark:hover:bg-amber-900/50 h-auto"
             >
-              <Ticket className="text-accent w-6 h-6 mb-2" />
+              <Ticket className="text-yellow-500 w-6 h-6 mb-2" />
               <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
                 {language === 'ar' ? 'التذاكر' : 'Tickets'}
               </span>
@@ -149,7 +151,7 @@ export default function Home() {
             {[1, 2, 3].map((i) => (
               <div
                 key={i}
-                className="bg-white rounded-xl border border-gray-200 p-4 shimmer h-20"
+                className="bg-white rounded-xl border border-gray-200 p-4 shimmer h-24"
               ></div>
             ))}
           </div>

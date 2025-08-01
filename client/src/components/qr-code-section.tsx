@@ -27,7 +27,11 @@ export default function QRCodeSection({ reservation }: QRCodeSectionProps) {
 
   return (
     <div className="px-4 py-0 pb-4">
-      <div className="bg-gradient-to-br from-gray-900 to-gray-800 dark:from-gray-800 dark:to-gray-900 rounded-xl p-4 text-white">
+      <div className="bg-gradient-to-br from-gray-900 to-gray-800 dark:from-gray-800 dark:to-gray-900 rounded-xl p-4 text-white cursor-pointer hover:from-gray-800 hover:to-gray-700 dark:hover:from-gray-700 dark:hover:to-gray-800 transition-all duration-200"
+           onClick={() => {
+             // Make the whole QR section clickable
+             handleShare();
+           }}>
         <div className="flex items-center justify-between mb-3">
           <h3 className="font-semibold">
             {language === 'ar' ? 'رمز الدخول السريع' : 'Quick Entry Code'}
@@ -62,7 +66,10 @@ export default function QRCodeSection({ reservation }: QRCodeSectionProps) {
             <Button
               variant="ghost"
               size="sm"
-              onClick={handleShare}
+              onClick={(e) => {
+                e.stopPropagation(); // Prevent double triggering
+                handleShare();
+              }}
               className="bg-white bg-opacity-20 hover:bg-opacity-30 text-white"
             >
               <Share className="w-4 h-4 mr-2" />

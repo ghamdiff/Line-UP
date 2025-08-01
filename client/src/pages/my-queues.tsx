@@ -17,7 +17,8 @@ export default function MyQueues() {
   
   const { data: reservations, isLoading } = useQuery<any[]>({
     queryKey: ["/api/reservations/user/1"],
-    refetchInterval: 30000, // Auto-refresh every 30 seconds
+    refetchInterval: 5000, // Auto-refresh every 5 seconds for real-time updates
+    refetchOnWindowFocus: true, // Refresh when user returns to tab
   });
 
   // Separate current and history queues
@@ -161,8 +162,10 @@ export default function MyQueues() {
                       />
                       <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mt-3">
                         <div 
-                          className="bg-primary h-2 rounded-full" 
-                          style={{ width: `${Math.max(20, 100 - (reservation.position * 5))}%` }}
+                          className="bg-primary h-2 rounded-full transition-all duration-500" 
+                          style={{ 
+                            width: `${Math.min(95, Math.max(5, ((10 - Math.min(reservation.position, 10)) / 10) * 100))}%` 
+                          }}
                         ></div>
                       </div>
                     </div>
@@ -173,23 +176,32 @@ export default function MyQueues() {
                       {language === 'ar' ? 'انضممت في:' : 'Joined:'} {new Date(reservation.createdAt).toLocaleDateString(language === 'ar' ? 'ar-SA' : 'en-US')}
                     </p>
                     <div className="flex items-center gap-2">
-                      {reservation.status === "waiting" && (
+                      {reservation.status === "waiting" && reservation.position > 0 && (
                         <Button 
                           variant="ghost" 
                           size="sm" 
                           onClick={() => leaveMutation.mutate(reservation.id)}
                           disabled={leaveMutation.isPending}
-                          className="text-red-600 hover:bg-red-50 p-2 h-auto"
+                          className="text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 p-2 h-auto"
                         >
                           <X className="w-4 h-4" />
                         </Button>
                       )}
-                      {reservation.qrCode && (
-                        <Button variant="outline" size="sm" className="flex items-center gap-2">
-                          <QrCode className="w-4 h-4" />
-                          <span className="text-xs">{language === 'ar' ? 'رمز الدخول' : 'QR Code'}</span>
-                        </Button>
-                      )}
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="flex items-center gap-2 bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600"
+                        onClick={() => {
+                          // QR Code functionality - could open modal or navigate
+                          toast({
+                            title: language === 'ar' ? 'رمز الدخول' : 'QR Code',
+                            description: language === 'ar' ? 'سيتم عرض رمز الدخول عند اقتراب دورك' : 'QR code will be shown when your turn approaches',
+                          });
+                        }}
+                      >
+                        <QrCode className="w-4 h-4" />
+                        <span className="text-xs">{language === 'ar' ? 'رمز الدخول' : 'QR Code'}</span>
+                      </Button>
                     </div>
                   </div>
                 </CardContent>

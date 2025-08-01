@@ -53,7 +53,7 @@ export default function VenueCard({ venue }: VenueCardProps) {
             <img
               src={venue.imageUrl || "/api/placeholder/80/80"}
               alt={language === 'ar' ? venue.nameAr : venue.name}
-              className="w-20 h-20 object-cover"
+              className="w-20 h-22 object-cover"
             />
             <div className="flex-1 p-3">
               <div className="flex items-start justify-between mb-1">

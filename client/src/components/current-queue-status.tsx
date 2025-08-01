@@ -42,7 +42,7 @@ export default function CurrentQueueStatus({ reservation }: CurrentQueueStatusPr
     return null;
   }
 
-  const progressPercentage = Math.max(20, 100 - (reservation.position * 5));
+  const progressPercentage = Math.min(95, Math.max(5, ((10 - Math.min(reservation.position, 10)) / 10) * 100));
 
   return (
     <div className="px-4 py-4 bg-gradient-to-r from-primary to-blue-600 dark:from-primary dark:to-blue-700 text-white">
@@ -57,15 +57,17 @@ export default function CurrentQueueStatus({ reservation }: CurrentQueueStatusPr
                 {language === 'ar' ? reservation.venue.nameAr : reservation.venue.name}
               </p>
             </div>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => leaveMutation.mutate()}
-              disabled={leaveMutation.isPending}
-              className="bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-2 rounded-full"
-            >
-              <X className="w-4 h-4" />
-            </Button>
+            {reservation.position > 0 && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => leaveMutation.mutate()}
+                disabled={leaveMutation.isPending}
+                className="bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-1.5 rounded-full ml-2"
+              >
+                <X className="w-3 h-3" />
+              </Button>
+            )}
           </div>
         </div>
         <div className="text-left ml-4">
@@ -83,7 +85,7 @@ export default function CurrentQueueStatus({ reservation }: CurrentQueueStatusPr
         />
         <div className="mt-3 w-full bg-white bg-opacity-30 rounded-full h-2">
           <div 
-            className="bg-white h-2 rounded-full transition-all duration-300" 
+            className="bg-white h-2 rounded-full transition-all duration-500" 
             style={{ width: `${progressPercentage}%` }}
           ></div>
         </div>
