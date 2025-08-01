@@ -45,7 +45,7 @@ export default function QRCodeSection({ reservation }: QRCodeSectionProps) {
               {language === 'ar' ? reservation.venue.nameAr : reservation.venue.name}
             </p>
             <p className="text-xs opacity-70">
-              {language === 'ar' ? 'صالح لمدة 30 دقيقة' : 'Valid for 30 minutes'}
+              {language === 'ar' ? 'صالح لمدة 5 دقائق' : 'Valid for 5 minutes'}
             </p>
             <div className="mt-2">
               <div className="w-16 h-16 bg-white rounded-lg p-1">
