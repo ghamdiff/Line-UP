@@ -14,7 +14,7 @@ export default function Login() {
   const { t, language, toggleLanguage } = useLanguage();
   const [formData, setFormData] = useState({
     email: "",
-    password: ""
+    password: "",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -28,7 +28,7 @@ export default function Login() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -36,35 +36,40 @@ export default function Login() {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-4">
       <Card className="w-full max-w-md bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
         <CardHeader className="text-center">
-          {/* Logo Placeholder */}
+          {/* Logo Image */}
           <div className="mb-6 flex justify-center">
-            <div className="w-24 h-24 bg-primary rounded-xl flex items-center justify-center">
-              <div className="w-16 h-16 bg-white dark:bg-gray-800 rounded-lg flex items-center justify-center">
-                <span className="text-primary font-bold text-xl">Q</span>
-              </div>
-            </div>
+            <img
+              src="https://i.ibb.co/gM9PVx8s/bd9cd335-452e-45bc-b61a-3dfd063ea85a.png"
+              alt="Logo"
+              className="w-36 h-36 rounded-xl"
+            />
           </div>
-          
+
           {/* Language Toggle */}
           <div className="absolute top-4 left-4">
-            <Button variant="outline" size="sm" onClick={toggleLanguage} className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={toggleLanguage}
+              className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300"
+            >
               <Globe className="w-4 h-4 mr-1" />
-              {language === 'ar' ? 'EN' : 'عر'}
+              {language === "ar" ? "EN" : "عر"}
             </Button>
           </div>
 
-          <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-            {t('welcomeToQueue')}
-          </CardTitle>
           <p className="text-gray-600 dark:text-gray-400">
-            {t('loginToContinue')}
+            {t("loginToContinue")}
           </p>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-gray-700 dark:text-gray-300">
-                {t('emailOrPhone')}
+              <Label
+                htmlFor="email"
+                className="text-gray-700 dark:text-gray-300"
+              >
+                {t("emailOrPhone")}
               </Label>
               <Input
                 id="email"
@@ -78,8 +83,11 @@ export default function Login() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password" className="text-gray-700 dark:text-gray-300">
-                {t('password')}
+              <Label
+                htmlFor="password"
+                className="text-gray-700 dark:text-gray-300"
+              >
+                {t("password")}
               </Label>
               <Input
                 id="password"
@@ -92,11 +100,11 @@ export default function Login() {
                 placeholder="••••••••"
               />
             </div>
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               className="w-full bg-primary hover:bg-primary/90 text-white"
             >
-              {t('login')}
+              {t("login")}
             </Button>
           </form>
         </CardContent>
