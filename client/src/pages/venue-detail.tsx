@@ -36,15 +36,15 @@ export default function VenueDetail() {
     },
     onSuccess: () => {
       toast({
-        title: "تم الانضمام للطابور",
-        description: "لقد انضممت للطابور بنجاح. ستصلك إشعارات عند اقتراب دورك.",
+        title: language === 'ar' ? "تم الانضمام للطابور" : "Joined the queue!",
+        description: language === 'ar' ? "لقد انضممت للطابور بنجاح. ستصلك إشعارات عند اقتراب دورك." : "You have successfully joined the queue. You'll receive notifications when your turn approaches.",
       });
       queryClient.invalidateQueries({ queryKey: ["/api/reservations"] });
     },
     onError: () => {
       toast({
-        title: "خطأ",
-        description: "حدث خطأ أثناء الانضمام للطابور. حاول مرة أخرى.",
+        title: language === 'ar' ? "خطأ" : "Error",
+        description: language === 'ar' ? "حدث خطأ أثناء الانضمام للطابور. حاول مرة أخرى." : "An error occurred while joining the queue. Please try again.",
         variant: "destructive",
       });
     },

@@ -55,19 +55,8 @@ export default function MyQueues() {
       completed: language === 'ar' ? 'مكتمل' : 'Completed',
       cancelled: language === 'ar' ? 'ملغي' : 'Cancelled'
     };
-
-    switch (status) {
-      case "waiting":
-        return <Badge className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 border-blue-200 dark:border-blue-700">{statusTexts.waiting}</Badge>;
-      case "called":
-        return <Badge className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 border-green-200 dark:border-green-700">{statusTexts.called}</Badge>;
-      case "completed":
-        return <Badge className="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 border-gray-200 dark:border-gray-600">{statusTexts.completed}</Badge>;
-      case "cancelled":
-        return <Badge className="bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 border-red-200 dark:border-red-700">{statusTexts.cancelled}</Badge>;
-      default:
-        return <Badge className="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">{status}</Badge>;
-    }
+    
+    return statusTexts[status as keyof typeof statusTexts] || status;
   };
 
   const getStatusColor = (status: string) => {
@@ -129,26 +118,28 @@ export default function MyQueues() {
                 </h2>
                 <div className="space-y-3">
                   {currentQueues.map((reservation) => (
-              <Card key={reservation.id} className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 overflow-hidden">
+              <Card key={reservation.id} className="bg-gradient-to-r from-primary to-blue-600 dark:from-primary dark:to-blue-700 text-white overflow-hidden">
                 <CardContent className="p-4">
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex-1">
-                      <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
+                      <h3 className="font-semibold text-white mb-1">
                         {language === 'ar' ? reservation.venue.nameAr : reservation.venue.name}
                       </h3>
-                      <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
+                      <p className="text-sm text-white opacity-90 mb-2">
                         {language === 'ar' ? reservation.queue.nameAr : reservation.queue.name}
                       </p>
                       <div className="flex items-center gap-2">
-                        <div className={`status-dot ${getStatusColor(reservation.status)}`}></div>
-                        {getStatusBadge(reservation.status)}
+                        <div className="w-2 h-2 bg-white rounded-full"></div>
+                        <span className="text-xs bg-white bg-opacity-20 px-2 py-1 rounded-full">
+                          {getStatusBadge(reservation.status)}
+                        </span>
                       </div>
                     </div>
                     <div className="text-left">
-                      <p className="text-2xl font-bold text-primary queue-pulse">
+                      <p className="text-2xl font-bold text-white queue-pulse">
                         {reservation.position}
                       </p>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                      <p className="text-xs text-white opacity-90">
                         {language === 'ar' ? 'مكانك في الطابور' : 'Your position'}
                       </p>
                     </div>
@@ -160,9 +151,9 @@ export default function MyQueues() {
                         estimatedWaitTime={reservation.estimatedWaitTime || 25}
                         createdAt={reservation.createdAt}
                       />
-                      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mt-3">
+                      <div className="w-full bg-white bg-opacity-30 rounded-full h-2 mt-3">
                         <div 
-                          className="bg-primary h-2 rounded-full transition-all duration-500" 
+                          className="bg-white h-2 rounded-full transition-all duration-500" 
                           style={{ 
                             width: `${Math.min(95, Math.max(5, ((10 - Math.min(reservation.position, 10)) / 10) * 100))}%` 
                           }}
@@ -172,7 +163,7 @@ export default function MyQueues() {
                   )}
 
                   <div className="flex items-center justify-between">
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                    <p className="text-xs text-white opacity-70">
                       {language === 'ar' ? 'انضممت في:' : 'Joined:'} {new Date(reservation.createdAt).toLocaleDateString(language === 'ar' ? 'ar-SA' : 'en-US')}
                     </p>
                     <div className="flex items-center gap-2">
@@ -182,26 +173,21 @@ export default function MyQueues() {
                           size="sm" 
                           onClick={() => leaveMutation.mutate(reservation.id)}
                           disabled={leaveMutation.isPending}
-                          className="text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 p-2 h-auto"
+                          className="bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-1.5 rounded-full"
                         >
-                          <X className="w-4 h-4" />
+                          <X className="w-3 h-3" />
                         </Button>
                       )}
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
-                        className="flex items-center gap-2 bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600"
-                        onClick={() => {
-                          // QR Code functionality - could open modal or navigate
-                          toast({
-                            title: language === 'ar' ? 'رمز الدخول' : 'QR Code',
-                            description: language === 'ar' ? 'سيتم عرض رمز الدخول عند اقتراب دورك' : 'QR code will be shown when your turn approaches',
-                          });
-                        }}
-                      >
-                        <QrCode className="w-4 h-4" />
-                        <span className="text-xs">{language === 'ar' ? 'رمز الدخول' : 'QR Code'}</span>
-                      </Button>
+                      <Link to="/">
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="flex items-center gap-2 bg-white bg-opacity-20 hover:bg-opacity-30 text-white"
+                        >
+                          <QrCode className="w-4 h-4" />
+                          <span className="text-xs">{language === 'ar' ? 'رمز الدخول' : 'QR Code'}</span>
+                        </Button>
+                      </Link>
                     </div>
                   </div>
                 </CardContent>
