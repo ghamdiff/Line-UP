@@ -121,6 +121,7 @@ export default function MyQueues() {
             </Link>
           </div>
         ) : (
+
           <div className="space-y-6">
             {/* Current Queues Section */}
             {currentQueues.length > 0 && (

@@ -89,9 +89,9 @@ export default function CurrentQueueStatus({ reservation }: CurrentQueueStatusPr
           </p>
         </div>
       </div>
-      
+
       <div className="mt-3">
-        <QueueTimer 
+        <QueueTimer
           estimatedWaitTime={reservation.estimatedWaitTime || 25}
           createdAt={reservation.createdAt}
         />

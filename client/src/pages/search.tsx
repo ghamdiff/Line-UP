@@ -15,20 +15,20 @@ export default function SearchPage() {
   const { t, language } = useLanguage();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
-  
+
   const { data: venues, isLoading } = useQuery<Venue[]>({
     queryKey: ["/api/venues"],
   });
 
   const filteredVenues = venues?.filter(venue => {
-    const matchesSearch = !searchQuery || 
+    const matchesSearch = !searchQuery ||
       venue.nameAr.toLowerCase().includes(searchQuery.toLowerCase()) ||
       venue.name.toLowerCase().includes(searchQuery.toLowerCase());
-    
+
     const matchesCategory = selectedCategory === "all" ||
       venue.categoryAr === getCategoryArabic(selectedCategory) ||
       venue.category.toLowerCase() === selectedCategory.toLowerCase();
-    
+
     return matchesSearch && matchesCategory;
   });
 

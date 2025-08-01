@@ -38,7 +38,7 @@ export default function QRCodeSection({ reservation }: QRCodeSectionProps) {
           </h3>
           <QrCode className="w-5 h-5" />
         </div>
-        
+
         <div className="flex items-center justify-between">
           <div className="flex-1">
             <p className="text-sm opacity-90 mb-1">
@@ -61,7 +61,7 @@ export default function QRCodeSection({ reservation }: QRCodeSectionProps) {
               </div>
             </div>
           </div>
-          
+
           <div className="text-left">
             <Button
               variant="ghost"
