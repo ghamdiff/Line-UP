@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Send, Bot, User, Loader2 } from "lucide-react";
+import { Send, Bot, User, Loader2, ArrowRight } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 
 interface ChatMessage {
@@ -94,11 +94,18 @@ export default function Discover() {
     }
   };
 
+  const handleBackButtonClick = () => {
+    window.location.href = "/main"; // This is the URL for the main page
+  };
+
   return (
     <div className="flex flex-col h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
       <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3">
         <div className="flex items-center gap-3">
+          <Button onClick={handleBackButtonClick} className="bg-transparent hover:bg-gray-200 text-[#15458a]">
+            <ArrowRight className="w-5 h-5" />
+          </Button>
           <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center">
             <Bot className="w-5 h-5 text-white" />
           </div>

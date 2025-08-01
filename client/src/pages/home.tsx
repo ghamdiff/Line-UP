@@ -110,7 +110,7 @@ export default function Home() {
               </span>
             </Button>
           </Link>
-          <Link href="/search?map=true">
+          <Link href="/discover">
             <Button
               variant="ghost"
               className="w-full flex flex-col items-center p-3 bg-purple-50 dark:bg-purple-900/30 rounded-xl hover:bg-purple-100 dark:hover:bg-purple-900/50 h-auto"
