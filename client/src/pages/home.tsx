@@ -116,7 +116,9 @@ export default function Home() {
               className="w-full flex flex-col items-center p-3 bg-purple-50 dark:bg-purple-900/30 rounded-xl hover:bg-purple-100 dark:hover:bg-purple-900/50 h-auto"
             >
               <BotMessageSquare className="text-purple-500 w-6 h-6 mb-2" />
-              <span className="text-xs font-medium text-gray-700 dark:text-gray-300">AI</span>
+              <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
+                {language === 'ar' ? 'اكتشف' : 'Discover'}
+              </span>
             </Button>
           </Link>
         </div>

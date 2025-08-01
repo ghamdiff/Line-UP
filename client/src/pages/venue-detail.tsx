@@ -220,7 +220,7 @@ export default function VenueDetail() {
                         <Button
                           onClick={() => handleJoinQueue(queue.id, 1)}
                           disabled={reservationMutation.isPending && selectedQueue === queue.id}
-                          className="bg-primary text-white hover:bg-primary/90 rounded-r-none"
+                          className="bg-primary text-white hover:bg-primary/90 rounded-l-md rounded-r-none"
                         >
                           {reservationMutation.isPending && selectedQueue === queue.id 
                             ? (language === 'ar' ? "جاري الانضمام..." : "Joining...") 
@@ -231,7 +231,7 @@ export default function VenueDetail() {
                           <PopoverTrigger asChild>
                             <Button
                               disabled={reservationMutation.isPending && selectedQueue === queue.id}
-                              className="bg-primary text-white hover:bg-primary/90 px-2 rounded-l-none border-l border-primary-foreground/20"
+                              className="bg-primary text-white hover:bg-primary/90 px-2 rounded-r-md rounded-l-none border-l border-primary-foreground/20"
                             >
                               <ChevronDown className="w-4 h-4" />
                             </Button>

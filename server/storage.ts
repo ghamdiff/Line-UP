@@ -264,8 +264,9 @@ export class MemStorage implements IStorage {
     const queue = await this.getQueue(insertReservation.queueId);
     const groupSize = insertReservation.groupSize || 1;
     
-    // Position should be the current count + 1 (not +2)
-    // If there are 7 people in queue, user position should be 8
+    // Position calculation for groups:
+    // If there are 7 people in queue and user brings 3 people, their positions are 8, 9, 10
+    // So position should be current count + 1 (start of the group)
     const position = (queue?.currentCount || 0) + 1;
     
     // Each person takes 1.5 minutes, so estimated wait time = position * 1.5
@@ -348,7 +349,7 @@ export class MemStorage implements IStorage {
     }
 
     const now = new Date();
-    const createdAt = new Date(reservation.createdAt);
+    const createdAt = reservation.createdAt instanceof Date ? reservation.createdAt : new Date(reservation.createdAt || Date.now());
     const elapsedMinutes = (now.getTime() - createdAt.getTime()) / (1000 * 60);
     
     // Calculate initial position based on estimated wait time (reverse calculation)

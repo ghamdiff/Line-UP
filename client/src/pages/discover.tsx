@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Send, Bot, User, Loader2, ArrowRight } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
+import { Link } from "wouter";
 
 interface ChatMessage {
   id: string;
@@ -32,9 +33,10 @@ export default function Discover() {
     // Add welcome message
     const welcomeMessage: ChatMessage = {
       id: "welcome",
-      text: language === 'ar' 
-        ? "مرحباً! أنا مساعدك الذكي لاستكشاف منطقة عسير. يمكنني مساعدتك في العثور على المطاعم والأماكن الترفيهية والفعاليات في المنطقة. كيف يمكنني مساعدتك؟"
-        : "Hello! I'm your AI assistant for exploring the Aseer Region. I can help you find restaurants, entertainment venues, and events in the area. How can I help you?",
+      text:
+        language === "ar"
+          ? "مرحباً! أنا مساعدك الذكي لاستكشاف منطقة عسير. يمكنني مساعدتك في العثور على المطاعم والأماكن الترفيهية والفعاليات في المنطقة. كيف يمكنني مساعدتك؟"
+          : "Hello! I'm your AI assistant for exploring the Aseer Region. I can help you find restaurants, entertainment venues, and events in the area. How can I help you?",
       isUser: false,
       timestamp: new Date(),
     };
@@ -51,7 +53,7 @@ export default function Discover() {
       timestamp: new Date(),
     };
 
-    setMessages(prev => [...prev, userMessage]);
+    setMessages((prev) => [...prev, userMessage]);
     setInputMessage("");
     setIsLoading(true);
 
@@ -60,9 +62,9 @@ export default function Discover() {
         message: inputMessage,
         language: language,
       });
-      
+
       const data = await response.json();
-      
+
       const botMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
         text: data.response,
@@ -70,32 +72,29 @@ export default function Discover() {
         timestamp: new Date(),
       };
 
-      setMessages(prev => [...prev, botMessage]);
+      setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
       console.error("Error sending message:", error);
       const errorMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
-        text: language === 'ar' 
-          ? "أعتذر، حدث خطأ في الاتصال. يرجى المحاولة مرة أخرى."
-          : "Sorry, there was a connection error. Please try again.",
+        text:
+          language === "ar"
+            ? "أعتذر، حدث خطأ في الاتصال. يرجى المحاولة مرة أخرى."
+            : "Sorry, there was a connection error. Please try again.",
         isUser: false,
         timestamp: new Date(),
       };
-      setMessages(prev => [...prev, errorMessage]);
+      setMessages((prev) => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();
     }
-  };
-
-  const handleBackButtonClick = () => {
-    window.location.href = "/main"; // This is the URL for the main page
   };
 
   return (
@@ -103,18 +102,22 @@ export default function Discover() {
       {/* Header */}
       <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3">
         <div className="flex items-center gap-3">
-          <Button onClick={handleBackButtonClick} className="bg-transparent hover:bg-gray-200 text-[#15458a]">
-            <ArrowRight className="w-5 h-5" />
-          </Button>
+          <Link href="/">
+            <Button className="bg-transparent hover:bg-gray-200 text-[#15458a]">
+              <ArrowRight className="w-5 h-5" />
+            </Button>
+          </Link>
           <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center">
             <Bot className="w-5 h-5 text-white" />
           </div>
           <div>
             <h1 className="text-lg font-semibold text-gray-900 dark:text-white">
-              {language === 'ar' ? 'مساعد الاستكشاف' : 'Discovery Assistant'}
+              {language === "ar" ? "مساعد الاستكشاف" : "Discovery Assistant"}
             </h1>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              {language === 'ar' ? 'اكتشف أماكن جديدة في عسير' : 'Discover new places in Aseer'}
+              {language === "ar"
+                ? "اكتشف أماكن جديدة في عسير"
+                : "Discover new places in Aseer"}
             </p>
           </div>
         </div>
@@ -125,42 +128,59 @@ export default function Discover() {
         {messages.map((message) => (
           <div
             key={message.id}
-            className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}
+            className={`flex ${message.isUser ? "justify-end" : "justify-start"}`}
           >
-            <div className={`flex items-start gap-2 max-w-[80%] ${message.isUser ? 'flex-row-reverse' : 'flex-row'}`}>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-                message.isUser 
-                  ? 'bg-primary text-white' 
-                  : 'bg-purple-500 text-white'
-              }`}>
-                {message.isUser ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
+            <div
+              className={`flex items-start gap-2 max-w-[80%] ${message.isUser ? "flex-row-reverse" : "flex-row"}`}
+            >
+              <div
+                className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
+                  message.isUser
+                    ? "bg-primary text-white"
+                    : "bg-purple-500 text-white"
+                }`}
+              >
+                {message.isUser ? (
+                  <User className="w-4 h-4" />
+                ) : (
+                  <Bot className="w-4 h-4" />
+                )}
               </div>
-              <Card className={`${
-                message.isUser 
-                  ? 'bg-primary text-white border-primary' 
-                  : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700'
-              }`}>
+              <Card
+                className={`${
+                  message.isUser
+                    ? "bg-primary text-white border-primary"
+                    : "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+                }`}
+              >
                 <CardContent className="p-3">
-                  <p className={`text-sm leading-relaxed whitespace-pre-wrap ${
-                    message.isUser 
-                      ? 'text-white' 
-                      : 'text-gray-900 dark:text-white'
-                  }`}>
+                  <p
+                    className={`text-sm leading-relaxed whitespace-pre-wrap ${
+                      message.isUser
+                        ? "text-white"
+                        : "text-gray-900 dark:text-white"
+                    }`}
+                  >
                     {message.text}
                   </p>
-                  <p className={`text-xs mt-2 opacity-70 ${
-                    message.isUser 
-                      ? 'text-white' 
-                      : 'text-gray-500 dark:text-gray-400'
-                  }`}>
-                    {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  <p
+                    className={`text-xs mt-2 opacity-70 ${
+                      message.isUser
+                        ? "text-white"
+                        : "text-gray-500 dark:text-gray-400"
+                    }`}
+                  >
+                    {message.timestamp.toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
                   </p>
                 </CardContent>
               </Card>
             </div>
           </div>
         ))}
-        
+
         {isLoading && (
           <div className="flex justify-start">
             <div className="flex items-start gap-2 max-w-[80%]">
@@ -172,7 +192,7 @@ export default function Discover() {
                   <div className="flex items-center gap-2">
                     <Loader2 className="w-4 h-4 animate-spin text-purple-500" />
                     <p className="text-sm text-gray-500 dark:text-gray-400">
-                      {language === 'ar' ? 'جاري الكتابة...' : 'Typing...'}
+                      {language === "ar" ? "جاري الكتابة..." : "Typing..."}
                     </p>
                   </div>
                 </CardContent>
@@ -190,7 +210,11 @@ export default function Discover() {
             value={inputMessage}
             onChange={(e) => setInputMessage(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder={language === 'ar' ? 'اكتب رسالتك هنا...' : 'Type your message here...'}
+            placeholder={
+              language === "ar"
+                ? "اكتب رسالتك هنا..."
+                : "Type your message here..."
+            }
             className="flex-1"
             disabled={isLoading}
           />
