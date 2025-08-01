@@ -126,7 +126,7 @@ export default function VenueDetail() {
         <img
           src={venue.imageUrl || "/api/placeholder/400/200"}
           alt={language === 'ar' ? venue.nameAr : venue.name}
-          className="w-full h-48 object-cover"
+          className="w-full h-48 object-cover object-center"
         />
         <div className="absolute bottom-4 right-4">
           <div className="flex items-center bg-black bg-opacity-50 text-white px-2 py-1 rounded">
@@ -172,35 +172,41 @@ export default function VenueDetail() {
             ))}
           </div>
         ) : queues?.length === 0 ? (
-          <Card>
+          <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
             <CardContent className="p-6 text-center">
-              <Clock className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-              <h3 className="font-semibold text-gray-900 mb-2">لا توجد طوابير متاحة</h3>
-              <p className="text-sm text-gray-500">هذا المكان لا يحتوي على طوابير في الوقت الحالي</p>
+              <Clock className="w-12 h-12 text-gray-400 dark:text-gray-500 mx-auto mb-3" />
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
+                {language === 'ar' ? 'لا توجد طوابير متاحة' : 'No queues available'}
+              </h3>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                {language === 'ar' ? 'هذا المكان لا يحتوي على طوابير في الوقت الحالي' : 'This venue has no queues at the moment'}
+              </p>
             </CardContent>
           </Card>
         ) : (
           <div className="space-y-3">
             {queues?.map((queue) => (
-              <Card key={queue.id} className="border border-gray-200">
+              <Card key={queue.id} className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
                 <CardContent className="p-4">
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex-1">
-                      <h3 className="font-semibold text-gray-900 mb-1">{queue.nameAr}</h3>
+                      <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
+                        {language === 'ar' ? queue.nameAr : queue.name}
+                      </h3>
                       <div className="flex items-center gap-2 mb-2">
                         <div className={`status-dot ${getQueueStatusColor(queue.currentCount, queue.maxCapacity)}`}></div>
-                        <span className="text-sm text-gray-600">
+                        <span className="text-sm text-gray-600 dark:text-gray-400">
                           {getQueueStatusText(queue.currentCount, queue.maxCapacity)}
                         </span>
                       </div>
-                      <div className="flex items-center gap-4 text-sm text-gray-500">
+                      <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
                         <div className="flex items-center gap-1">
                           <Users className="w-4 h-4" />
                           <span>{queue.currentCount || 0}/{queue.maxCapacity || 100}</span>
                         </div>
                         <div className="flex items-center gap-1">
                           <Clock className="w-4 h-4" />
-                          <span>~{queue.averageWaitTime || 0} دقيقة</span>
+                          <span>~{queue.averageWaitTime || 0} {language === 'ar' ? 'دقيقة' : 'min'}</span>
                         </div>
                       </div>
                     </div>
@@ -210,12 +216,14 @@ export default function VenueDetail() {
                         disabled={reservationMutation.isPending && selectedQueue === queue.id}
                         className="bg-primary text-white hover:bg-primary/90"
                       >
-                        {reservationMutation.isPending && selectedQueue === queue.id ? "جاري الانضمام..." : "انضم للطابور"}
+                        {reservationMutation.isPending && selectedQueue === queue.id 
+                          ? (language === 'ar' ? "جاري الانضمام..." : "Joining...") 
+                          : (language === 'ar' ? "انضم للطابور" : "Join Queue")}
                       </Button>
                     </div>
                   </div>
                   
-                  <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                     <div 
                       className="bg-primary h-2 rounded-full transition-all duration-300" 
                       style={{ width: `${((queue.currentCount || 0) / (queue.maxCapacity || 100)) * 100}%` }}
@@ -231,11 +239,15 @@ export default function VenueDetail() {
       {/* Contact Info */}
       {venue.phone && (
         <div className="px-4 py-4">
-          <Card>
+          <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
             <CardContent className="p-4">
-              <h3 className="font-semibold text-gray-900 mb-2">معلومات الاتصال</h3>
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
+                {language === 'ar' ? 'معلومات الاتصال' : 'Contact Information'}
+              </h3>
               <div className="flex items-center gap-2">
-                <span className="text-gray-600">الهاتف:</span>
+                <span className="text-gray-600 dark:text-gray-400">
+                  {language === 'ar' ? 'الهاتف:' : 'Phone:'}
+                </span>
                 <a href={`tel:${venue.phone}`} className="text-primary font-medium">
                   {venue.phone}
                 </a>

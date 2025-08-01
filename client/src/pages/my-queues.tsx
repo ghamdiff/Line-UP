@@ -17,7 +17,12 @@ export default function MyQueues() {
   
   const { data: reservations, isLoading } = useQuery<any[]>({
     queryKey: ["/api/reservations/user/1"],
+    refetchInterval: 30000, // Auto-refresh every 30 seconds
   });
+
+  // Separate current and history queues
+  const currentQueues = reservations?.filter(r => r.status === 'waiting' || r.status === 'called') || [];
+  const historyQueues = reservations?.filter(r => r.status === 'completed' || r.status === 'cancelled') || [];
 
   const leaveMutation = useMutation({
     mutationFn: async (reservationId: number) => {
@@ -28,15 +33,15 @@ export default function MyQueues() {
     },
     onSuccess: () => {
       toast({
-        title: "تم الخروج من الطابور",
-        description: "لقد خرجت من الطابور بنجاح.",
+        title: language === 'ar' ? "تم الخروج من الطابور" : "Left the queue",
+        description: language === 'ar' ? "لقد خرجت من الطابور بنجاح." : "You have successfully left the queue.",
       });
       queryClient.invalidateQueries({ queryKey: ["/api/reservations"] });
     },
     onError: () => {
       toast({
-        title: "خطأ",
-        description: "حدث خطأ أثناء الخروج من الطابور. حاول مرة أخرى.",
+        title: language === 'ar' ? "خطأ" : "Error",
+        description: language === 'ar' ? "حدث خطأ أثناء الخروج من الطابور. حاول مرة أخرى." : "An error occurred while leaving the queue. Please try again.",
         variant: "destructive",
       });
     },
@@ -114,21 +119,24 @@ export default function MyQueues() {
             </Link>
           </div>
         ) : (
-          <div className="space-y-4">
-            <h2 className="text-lg font-bold text-gray-900 dark:text-white">
-              {language === 'ar' ? 'طوابيري الحالية' : 'Current Queues'}
-            </h2>
-            
-            {reservations?.map((reservation) => (
+          <div className="space-y-6">
+            {/* Current Queues Section */}
+            {currentQueues.length > 0 && (
+              <div>
+                <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
+                  {language === 'ar' ? 'طوابيري الحالية' : 'Current Queues'}
+                </h2>
+                <div className="space-y-3">
+                  {currentQueues.map((reservation) => (
               <Card key={reservation.id} className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 overflow-hidden">
                 <CardContent className="p-4">
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex-1">
-                      <h3 className="font-semibold text-gray-900 mb-1">
-                        {reservation.venue.nameAr}
+                      <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
+                        {language === 'ar' ? reservation.venue.nameAr : reservation.venue.name}
                       </h3>
-                      <p className="text-sm text-gray-500 mb-2">
-                        {reservation.queue.nameAr}
+                      <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
+                        {language === 'ar' ? reservation.queue.nameAr : reservation.queue.name}
                       </p>
                       <div className="flex items-center gap-2">
                         <div className={`status-dot ${getStatusColor(reservation.status)}`}></div>
@@ -139,7 +147,9 @@ export default function MyQueues() {
                       <p className="text-2xl font-bold text-primary queue-pulse">
                         {reservation.position}
                       </p>
-                      <p className="text-xs text-gray-500">مكانك في الطابور</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                        {language === 'ar' ? 'مكانك في الطابور' : 'Your position'}
+                      </p>
                     </div>
                   </div>
 
@@ -149,7 +159,7 @@ export default function MyQueues() {
                         estimatedWaitTime={reservation.estimatedWaitTime || 25}
                         createdAt={reservation.createdAt}
                       />
-                      <div className="w-full bg-gray-200 rounded-full h-2 mt-3">
+                      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mt-3">
                         <div 
                           className="bg-primary h-2 rounded-full" 
                           style={{ width: `${Math.max(20, 100 - (reservation.position * 5))}%` }}
@@ -159,8 +169,8 @@ export default function MyQueues() {
                   )}
 
                   <div className="flex items-center justify-between">
-                    <p className="text-xs text-gray-500">
-                      انضممت في: {new Date(reservation.createdAt).toLocaleDateString('ar-SA')}
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      {language === 'ar' ? 'انضممت في:' : 'Joined:'} {new Date(reservation.createdAt).toLocaleDateString(language === 'ar' ? 'ar-SA' : 'en-US')}
                     </p>
                     <div className="flex items-center gap-2">
                       {reservation.status === "waiting" && (
@@ -177,14 +187,50 @@ export default function MyQueues() {
                       {reservation.qrCode && (
                         <Button variant="outline" size="sm" className="flex items-center gap-2">
                           <QrCode className="w-4 h-4" />
-                          <span className="text-xs">رمز الدخول</span>
+                          <span className="text-xs">{language === 'ar' ? 'رمز الدخول' : 'QR Code'}</span>
                         </Button>
                       )}
                     </div>
                   </div>
                 </CardContent>
               </Card>
-            ))}
+                  ))}
+                </div>
+              </div>
+            )}
+            
+            {/* History Section */}
+            {historyQueues.length > 0 && (
+              <div>
+                <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
+                  {language === 'ar' ? 'سجل الطوابير' : 'Queue History'}
+                </h2>
+                <div className="space-y-3">
+                  {historyQueues.map((reservation) => (
+                    <Card key={reservation.id} className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 opacity-75">
+                      <CardContent className="p-4">
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
+                              {language === 'ar' ? reservation.venue.nameAr : reservation.venue.name}
+                            </h3>
+                            <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
+                              {language === 'ar' ? reservation.queue.nameAr : reservation.queue.name}
+                            </p>
+                            <div className="flex items-center gap-2">
+                              {getStatusBadge(reservation.status)}
+                            </div>
+                          </div>
+                        </div>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-3">
+                          {language === 'ar' ? 'انضممت في:' : 'Joined:'} {new Date(reservation.createdAt).toLocaleDateString(language === 'ar' ? 'ar-SA' : 'en-US')}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>

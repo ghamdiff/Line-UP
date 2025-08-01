@@ -122,7 +122,10 @@ export default function Home() {
 
       {/* Current Queue Status */}
       {activeReservation && (
-        <CurrentQueueStatus reservation={activeReservation} />
+        <>
+          <CurrentQueueStatus reservation={activeReservation} />
+          <QRCodeSection reservation={activeReservation} />
+        </>
       )}
 
       {/* Popular Venues */}
@@ -161,9 +164,6 @@ export default function Home() {
 
       {/* Map Section */}
       <MapSection venues={venues || []} />
-
-      {/* QR Code Section */}
-      {activeReservation && <QRCodeSection reservation={activeReservation} />}
 
       {/* Bottom Navigation */}
       <BottomNavigation />

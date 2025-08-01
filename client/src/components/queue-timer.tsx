@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Clock } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface QueueTimerProps {
   estimatedWaitTime: number; // in minutes
@@ -7,6 +8,7 @@ interface QueueTimerProps {
 }
 
 export default function QueueTimer({ estimatedWaitTime, createdAt }: QueueTimerProps) {
+  const { language } = useLanguage();
   const [timeLeft, setTimeLeft] = useState<string>("");
   const [finishTime, setFinishTime] = useState<string>("");
 
@@ -18,7 +20,7 @@ export default function QueueTimer({ estimatedWaitTime, createdAt }: QueueTimerP
       
       // Set finish time (only calculate once)
       if (!finishTime) {
-        setFinishTime(finishDateTime.toLocaleTimeString('ar-SA', {
+        setFinishTime(finishDateTime.toLocaleTimeString(language === 'ar' ? 'ar-SA' : 'en-US', {
           hour: '2-digit',
           minute: '2-digit',
           hour12: false
@@ -29,7 +31,7 @@ export default function QueueTimer({ estimatedWaitTime, createdAt }: QueueTimerP
       const timeDiff = finishDateTime.getTime() - now.getTime();
       
       if (timeDiff <= 0) {
-        setTimeLeft("حان دورك!");
+        setTimeLeft(language === 'ar' ? "حان دورك!" : "Your turn!");
         return;
       }
       
@@ -39,21 +41,23 @@ export default function QueueTimer({ estimatedWaitTime, createdAt }: QueueTimerP
       if (hoursLeft > 0) {
         setTimeLeft(`${hoursLeft}:${minutesLeft.toString().padStart(2, '0')}`);
       } else {
-        setTimeLeft(`${minutesLeft} دقيقة`);
+        setTimeLeft(language === 'ar' ? `${minutesLeft} دقيقة` : `${minutesLeft} min`);
       }
     };
 
     calculateTimes();
-    const interval = setInterval(calculateTimes, 60000); // Update every minute
+    const interval = setInterval(calculateTimes, 30000); // Update every 30 seconds for better responsiveness
 
     return () => clearInterval(interval);
-  }, [estimatedWaitTime, createdAt, finishTime]);
+  }, [estimatedWaitTime, createdAt, finishTime, language]);
 
   return (
-    <div className="bg-gray-50 rounded-lg p-3">
+    <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3">
       <div className="flex justify-between items-center mb-2">
-        <span className="text-sm text-gray-600">الوقت المتوقع للانتهاء</span>
-        <span className="font-semibold text-gray-900 arabic-numerals">
+        <span className="text-sm text-gray-600 dark:text-gray-400">
+          {language === 'ar' ? 'الوقت المتوقع للانتهاء' : 'Estimated finish time'}
+        </span>
+        <span className="font-semibold text-gray-900 dark:text-white arabic-numerals">
           {finishTime}
         </span>
       </div>
