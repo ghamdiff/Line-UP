@@ -42,8 +42,8 @@ export default function CurrentQueueStatus({ reservation }: CurrentQueueStatusPr
     return null;
   }
   
-  // Check if user's turn has arrived (position 0 or estimated time has passed)
-  const isUserTurn = reservation.position === 0;
+  // Check if user's turn has arrived (position 1 or less - in queue systems position 1 means it's your turn)
+  const isUserTurn = reservation.position <= 1;
 
   const progressPercentage = Math.min(95, Math.max(5, ((10 - Math.min(reservation.position, 10)) / 10) * 100));
 

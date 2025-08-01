@@ -244,6 +244,11 @@ export class MemStorage implements IStorage {
     );
 
     return userReservations.map(reservation => {
+      // Update position based on elapsed time for waiting reservations
+      if (reservation.status === "waiting") {
+        this.updatePositionBasedOnTime(reservation);
+      }
+      
       const queue = this.queues.get(reservation.queueId)!;
       const venue = this.venues.get(queue.venueId)!;
       return { ...reservation, venue, queue };
@@ -298,6 +303,9 @@ export class MemStorage implements IStorage {
     );
 
     if (activeReservation) {
+      // Update position based on elapsed time for dynamic progress
+      this.updatePositionBasedOnTime(activeReservation);
+      
       const queue = this.queues.get(activeReservation.queueId)!;
       const venue = this.venues.get(queue.venueId)!;
       return { ...activeReservation, venue, queue };
@@ -323,6 +331,36 @@ export class MemStorage implements IStorage {
     };
     this.reviews.set(id, review);
     return review;
+  }
+
+  // Private method to update position based on elapsed time
+  private updatePositionBasedOnTime(reservation: Reservation): void {
+    if (!reservation.estimatedWaitTime || reservation.status !== "waiting") {
+      return;
+    }
+
+    const now = new Date();
+    const createdAt = new Date(reservation.createdAt);
+    const elapsedMinutes = (now.getTime() - createdAt.getTime()) / (1000 * 60);
+    const estimatedWaitTime = reservation.estimatedWaitTime;
+    
+    // Calculate how much of the wait time has elapsed (0 to 1)
+    const timeProgress = Math.min(elapsedMinutes / estimatedWaitTime, 1);
+    
+    // Start from initial position and move towards position 1 (your turn)
+    const initialPosition = Math.floor((reservation.estimatedWaitTime || 25) * 1.5); // As mentioned in requirements
+    const newPosition = Math.max(1, Math.floor(initialPosition * (1 - timeProgress)));
+    
+    // Update the reservation position
+    reservation.position = newPosition;
+    
+    // If time has fully elapsed, set position to 1 (your turn)
+    if (timeProgress >= 1) {
+      reservation.position = 1;
+    }
+    
+    // Update in storage
+    this.reservations.set(reservation.id, reservation);
   }
 }
 

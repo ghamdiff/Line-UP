@@ -74,14 +74,6 @@ export default function MyQueues() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pb-20">
-      {/* Header */}
-      <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3">
-        <div className="flex items-center gap-3">
-          <Link href="/">
-          </Link>
-          <h1 className="text-lg font-semibold text-gray-900 dark:text-white">{t('myQueues')}</h1>
-        </div>
-      </div>
 
       {/* Content */}
       <div className="px-4 py-4">
@@ -167,7 +159,7 @@ export default function MyQueues() {
                       {language === 'ar' ? 'انضممت في:' : 'Joined:'} {new Date(reservation.createdAt).toLocaleDateString(language === 'ar' ? 'ar-SA' : 'en-US')}
                     </p>
                     <div className="flex items-center gap-2">
-                      {reservation.status === "waiting" && reservation.position > 0 && (
+                      {reservation.status === "waiting" && reservation.position > 1 && (
                         <Button 
                           variant="ghost" 
                           size="sm" 
