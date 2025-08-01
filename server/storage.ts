@@ -259,22 +259,24 @@ export class MemStorage implements IStorage {
     return this.reservations.get(id);
   }
 
-  async createReservation(insertReservation: InsertReservation & { userId: number; position?: number }): Promise<Reservation> {
+  async createReservation(insertReservation: InsertReservation & { userId: number; position?: number; groupSize?: number }): Promise<Reservation> {
     const id = this.currentReservationId++;
     const queue = await this.getQueue(insertReservation.queueId);
+    const groupSize = insertReservation.groupSize || 1;
     
     // Position should be the current count + 1 (not +2)
     // If there are 7 people in queue, user position should be 8
     const position = (queue?.currentCount || 0) + 1;
     
     // Each person takes 1.5 minutes, so estimated wait time = position * 1.5
-    const estimatedWaitTime = position * 1.5;
+    const estimatedWaitTime = Math.floor(position * 1.5);
     const qrCode = `QR-${id}-${Date.now()}`;
     
     const reservation: Reservation = {
       ...insertReservation,
       id,
       position,
+      groupSize,
       estimatedWaitTime,
       status: insertReservation.status || "waiting",
       qrCode,
@@ -285,9 +287,9 @@ export class MemStorage implements IStorage {
     
     this.reservations.set(id, reservation);
     
-    // Update queue count to reflect new person joining
+    // Update queue count to reflect new group joining (add groupSize to current count)
     if (queue && queue.currentCount !== null) {
-      await this.updateQueueCount(queue.id, queue.currentCount + 1);
+      await this.updateQueueCount(queue.id, queue.currentCount + groupSize);
     }
     
     return reservation;

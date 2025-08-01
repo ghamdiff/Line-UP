@@ -49,7 +49,7 @@ export default function CurrentQueueStatus({ reservation }: CurrentQueueStatusPr
   // Assume initial position was around estimatedWaitTime / 1.5 (since each person takes 1.5 min)
   const initialPosition = Math.ceil((reservation.estimatedWaitTime || 25) / 1.5);
   const currentPosition = reservation.position;
-  const progressPercentage = Math.min(95, Math.max(5, ((initialPosition - currentPosition) / (initialPosition - 1)) * 100));
+  const progressPercentage = Math.min(100, Math.max(5, ((initialPosition - currentPosition) / (initialPosition - 1)) * 100));
 
   return (
     <div className="px-4 py-4 bg-gradient-to-r from-primary to-blue-600 dark:from-primary dark:to-blue-700 text-white">
@@ -78,7 +78,12 @@ export default function CurrentQueueStatus({ reservation }: CurrentQueueStatusPr
           </div>
         </div>
         <div className="text-left ml-4">
-          <p className="text-2xl font-bold queue-pulse arabic-numerals">{reservation.position}</p>
+          <p className="text-2xl font-bold queue-pulse arabic-numerals">
+            {reservation.groupSize > 1 
+              ? `${reservation.position}-${reservation.position + reservation.groupSize - 1}`
+              : reservation.position
+            }
+          </p>
           <p className="text-xs opacity-90">
             {language === 'ar' ? 'مكانك في الطابور' : 'Your position'}
           </p>

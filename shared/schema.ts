@@ -47,6 +47,7 @@ export const reservations = pgTable("reservations", {
   userId: integer("user_id").references(() => users.id).notNull(),
   queueId: integer("queue_id").references(() => queues.id).notNull(),
   position: integer("position").notNull(),
+  groupSize: integer("group_size").default(1).notNull(),
   estimatedWaitTime: integer("estimated_wait_time"), // in minutes
   status: text("status").default("waiting"), // waiting, called, completed, cancelled
   qrCode: text("qr_code"),

@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { ArrowRight, Star, MapPin, Clock, Users, QrCode } from "lucide-react";
+import { ArrowRight, Star, MapPin, Clock, Users, QrCode, ChevronDown } from "lucide-react";
 import { Link, useParams } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -17,6 +19,7 @@ export default function VenueDetail() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [selectedQueue, setSelectedQueue] = useState<number | null>(null);
+  const [groupSize, setGroupSize] = useState<number>(1);
 
   const { data: venue, isLoading: venueLoading } = useQuery<Venue>({
     queryKey: ["/api/venues", venueId],
@@ -27,10 +30,11 @@ export default function VenueDetail() {
   });
 
   const reservationMutation = useMutation({
-    mutationFn: async (data: { queueId: number; estimatedWaitTime: number }) => {
+    mutationFn: async (data: { queueId: number; estimatedWaitTime: number; groupSize: number }) => {
       const response = await apiRequest("POST", "/api/reservations", {
         queueId: data.queueId,
-        estimatedWaitTime: data.estimatedWaitTime
+        estimatedWaitTime: data.estimatedWaitTime,
+        groupSize: data.groupSize
       });
       return response.json();
     },
@@ -74,11 +78,12 @@ export default function VenueDetail() {
     }
   };
 
-  const handleJoinQueue = (queueId: number) => {
+  const handleJoinQueue = (queueId: number, groupSizeOverride?: number) => {
     const queue = queues?.find(q => q.id === queueId);
     const estimatedWaitTime = queue?.averageWaitTime || 25;
+    const finalGroupSize = groupSizeOverride || groupSize;
     setSelectedQueue(queueId);
-    reservationMutation.mutate({ queueId, estimatedWaitTime });
+    reservationMutation.mutate({ queueId, estimatedWaitTime, groupSize: finalGroupSize });
   };
 
   if (venueLoading || !venue) {
@@ -211,15 +216,57 @@ export default function VenueDetail() {
                       </div>
                     </div>
                     <div className="text-left">
-                      <Button
-                        onClick={() => handleJoinQueue(queue.id)}
-                        disabled={reservationMutation.isPending && selectedQueue === queue.id}
-                        className="bg-primary text-white hover:bg-primary/90"
-                      >
-                        {reservationMutation.isPending && selectedQueue === queue.id 
-                          ? (language === 'ar' ? "جاري الانضمام..." : "Joining...") 
-                          : (language === 'ar' ? "انضم للطابور" : "Join Queue")}
-                      </Button>
+                      <div className="flex items-center">
+                        <Button
+                          onClick={() => handleJoinQueue(queue.id, 1)}
+                          disabled={reservationMutation.isPending && selectedQueue === queue.id}
+                          className="bg-primary text-white hover:bg-primary/90 rounded-r-none"
+                        >
+                          {reservationMutation.isPending && selectedQueue === queue.id 
+                            ? (language === 'ar' ? "جاري الانضمام..." : "Joining...") 
+                            : (language === 'ar' ? "انضم للطابور" : "Join Queue")}
+                        </Button>
+                        
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <Button
+                              disabled={reservationMutation.isPending && selectedQueue === queue.id}
+                              className="bg-primary text-white hover:bg-primary/90 px-2 rounded-l-none border-l border-primary-foreground/20"
+                            >
+                              <ChevronDown className="w-4 h-4" />
+                            </Button>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-56 p-3">
+                            <div className="space-y-3">
+                              <h4 className="font-medium text-sm">
+                                {language === 'ar' ? 'عدد الأشخاص' : 'Group Size'}
+                              </h4>
+                              <Select
+                                value={groupSize.toString()}
+                                onValueChange={(value) => setGroupSize(parseInt(value))}
+                              >
+                                <SelectTrigger>
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  {[1, 2, 3, 4, 5, 6, 7, 8].map((size) => (
+                                    <SelectItem key={size} value={size.toString()}>
+                                      {size} {language === 'ar' ? (size === 1 ? 'شخص' : 'أشخاص') : (size === 1 ? 'person' : 'people')}
+                                    </SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                              <Button 
+                                onClick={() => handleJoinQueue(queue.id, groupSize)}
+                                disabled={reservationMutation.isPending && selectedQueue === queue.id}
+                                className="w-full bg-primary text-white hover:bg-primary/90"
+                              >
+                                {language === 'ar' ? `انضم بـ ${groupSize} أشخاص` : `Join with ${groupSize} people`}
+                              </Button>
+                            </div>
+                          </PopoverContent>
+                        </Popover>
+                      </div>
                     </div>
                   </div>
                   

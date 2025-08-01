@@ -22,13 +22,13 @@ export default function VenueCard({ venue }: VenueCardProps) {
     // Mock wait time based on venue popularity
     const ratingNum = parseFloat(venue.rating || "0");
     if (language === 'ar') {
-      if (ratingNum >= 4.8) return "45-60 دقيقة";
-      if (ratingNum >= 4.5) return "15-20 دقيقة";
-      return "5-10 دقائق";
+      if (ratingNum >= 4.8) return "~45-60 دقيقة";
+      if (ratingNum >= 4.5) return "~15-20 دقيقة";
+      return "~5-10 دقائق";
     } else {
-      if (ratingNum >= 4.8) return "45-60 min";
-      if (ratingNum >= 4.5) return "15-20 min";
-      return "5-10 min";
+      if (ratingNum >= 4.8) return "~45-60 min";
+      if (ratingNum >= 4.5) return "~15-20 min";
+      return "~5-10 min";
     }
   };
 
