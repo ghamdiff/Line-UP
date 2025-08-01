@@ -30,7 +30,7 @@ export default function Home() {
 
   const { data: activeReservation } = useQuery<any>({
     queryKey: ["/api/reservations/active/1"],
-    refetchInterval: 5000, // Auto-refresh every 5 seconds for real-time updates
+    refetchInterval: 3000, // Auto-refresh every 3 seconds for real-time updates
     refetchOnWindowFocus: true, // Refresh when user returns to tab
   });
 
