@@ -158,10 +158,52 @@ export default function VenueDetail() {
         </div>
 
         {(language === 'ar' ? venue.descriptionAr : venue.description) && (
-          <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+          <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
             {language === 'ar' ? venue.descriptionAr : venue.description}
           </p>
         )}
+        
+        {/* Pros and Cons Table */}
+        <div className="overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700">
+          <table className="w-full">
+            <thead>
+              <tr>
+                <th className="bg-green-50 dark:bg-green-900/20 px-4 py-3 text-left text-sm font-semibold text-green-800 dark:text-green-400 border-r border-gray-200 dark:border-gray-700">
+                  {language === 'ar' ? 'الإيجابيات' : 'Pros'}
+                </th>
+                <th className="bg-red-50 dark:bg-red-900/20 px-4 py-3 text-left text-sm font-semibold text-red-800 dark:text-red-400">
+                  {language === 'ar' ? 'السلبيات' : 'Cons'}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-t border-gray-200 dark:border-gray-700">
+                <td className="bg-green-50/50 dark:bg-green-950/20 px-4 py-3 text-sm text-gray-700 dark:text-gray-300 border-r border-gray-200 dark:border-gray-700">
+                  {/* User can edit this content */}
+                </td>
+                <td className="bg-red-50/50 dark:bg-red-950/20 px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
+                  {/* User can edit this content */}
+                </td>
+              </tr>
+              <tr className="border-t border-gray-200 dark:border-gray-700">
+                <td className="bg-green-50/50 dark:bg-green-950/20 px-4 py-3 text-sm text-gray-700 dark:text-gray-300 border-r border-gray-200 dark:border-gray-700">
+                  {/* User can edit this content */}
+                </td>
+                <td className="bg-red-50/50 dark:bg-red-950/20 px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
+                  {/* User can edit this content */}
+                </td>
+              </tr>
+              <tr className="border-t border-gray-200 dark:border-gray-700">
+                <td className="bg-green-50/50 dark:bg-green-950/20 px-4 py-3 text-sm text-gray-700 dark:text-gray-300 border-r border-gray-200 dark:border-gray-700">
+                  {/* User can edit this content */}
+                </td>
+                <td className="bg-red-50/50 dark:bg-red-950/20 px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
+                  {/* User can edit this content */}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {/* Queue Information */}
@@ -217,21 +259,11 @@ export default function VenueDetail() {
                     </div>
                     <div className="text-left">
                       <div className="flex items-center">
-                        <Button
-                          onClick={() => handleJoinQueue(queue.id, 1)}
-                          disabled={reservationMutation.isPending && selectedQueue === queue.id}
-                          className="bg-primary text-white hover:bg-primary/90 rounded-l-md rounded-r-none"
-                        >
-                          {reservationMutation.isPending && selectedQueue === queue.id 
-                            ? (language === 'ar' ? "جاري الانضمام..." : "Joining...") 
-                            : (language === 'ar' ? "انضم للطابور" : "Join Queue")}
-                        </Button>
-                        
                         <Popover>
                           <PopoverTrigger asChild>
                             <Button
                               disabled={reservationMutation.isPending && selectedQueue === queue.id}
-                              className="bg-primary text-white hover:bg-primary/90 px-2 rounded-r-md rounded-l-none border-l border-primary-foreground/20"
+                              className="bg-primary text-white hover:bg-primary/90 px-2 rounded-l-md rounded-r-none border-r border-primary-foreground/20"
                             >
                               <ChevronDown className="w-4 h-4" />
                             </Button>
@@ -266,6 +298,16 @@ export default function VenueDetail() {
                             </div>
                           </PopoverContent>
                         </Popover>
+                        
+                        <Button
+                          onClick={() => handleJoinQueue(queue.id, 1)}
+                          disabled={reservationMutation.isPending && selectedQueue === queue.id}
+                          className="bg-primary text-white hover:bg-primary/90 rounded-r-md rounded-l-none"
+                        >
+                          {reservationMutation.isPending && selectedQueue === queue.id 
+                            ? (language === 'ar' ? "جاري الانضمام..." : "Joining...") 
+                            : (language === 'ar' ? "انضم للطابور" : "Join Queue")}
+                        </Button>
                       </div>
                     </div>
                   </div>

@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import {
   Search,
-  Building2,
   Bell,
   Calendar,
   Utensils,
@@ -39,15 +38,17 @@ export default function Home() {
       <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Building2 className="text-primary w-5 h-5" />
+            <img src="https://i.ibb.co/HDvqGq1n/bd9cd335-452e-45bc-b61a-3dfd063ea85a-1.png" alt="Icon" className="w-7 h-7" />
             <div>
               <p className="font-semibold text-gray-900 dark:text-white">
-                {language === 'ar' 
-                  ? `مرحبًا ${user?.name || 'بك'} في أبها!` 
-                  : `Welcome ${user?.name || ''} to Abha!`}
+                {language === "ar"
+                  ? `مرحبا ${user?.name || "بك"} في أبها!`
+                  : `Welcome ${user?.name || ""} to Abha!`}
               </p>
               <p className="text-sm text-gray-500 dark:text-gray-400">
-                {language === 'ar' ? 'اكتشف ما هو متاح بالقرب منك' : 'Discover what\'s available near you'}
+                {language === "ar"
+                  ? "اكتشف ما هو متاح بالقرب منك"
+                  : "Discover what's available near you"}
               </p>
             </div>
           </div>

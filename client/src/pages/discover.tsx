@@ -35,8 +35,8 @@ export default function Discover() {
       id: "welcome",
       text:
         language === "ar"
-          ? "مرحباً! أنا مساعدك الذكي لاستكشاف منطقة عسير. يمكنني مساعدتك في العثور على المطاعم والأماكن الترفيهية والفعاليات في المنطقة. كيف يمكنني مساعدتك؟"
-          : "Hello! I'm your AI assistant for exploring the Aseer Region. I can help you find restaurants, entertainment venues, and events in the area. How can I help you?",
+          ? "مرحباً! أنا مساعدك الذكي لاستكشاف منطقة عسير. يمكنني مساعدتك في العثور على المطاعم والأماكن الترفيهية والفعاليات في المنطقة. كيف يمكنني مساعدتك؟ تذكر أنني قد أخطأ في بعض الأحيان، لذا يرجى التحقق من المعلومات."
+          : "Hello! I'm your AI assistant for exploring the Aseer Region. I can help you find restaurants, entertainment venues, and events in the area. How can I help you? Remember that I can make mistakes, so please check the information.",
       isUser: false,
       timestamp: new Date(),
     };
