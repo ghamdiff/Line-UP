@@ -1,112 +1,149 @@
 # Overview
 
-This is a modern full-stack web application built for queue management at various venues (restaurants, entertainment centers, museums, etc.). The application allows users to view nearby venues, join virtual queues, and track their position in real-time. It's designed as a mobile-first Progressive Web App (PWA) with Arabic language support.
+This is a modern full-stack Arabic queue reservation application built specifically for entertainment venues in the Aseer Region of Saudi Arabia. The app provides a seamless bilingual (Arabic/English) experience for users to discover venues, join virtual queues, and track their position in real-time. It features an integrated AI assistant powered by Google Gemini for local guidance and venue recommendations.
 
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
 
+## Project Status (January 2025)
+
+### Recently Completed Features
+- ✅ Bilingual pros/cons comparison tables for venues with dynamic content
+- ✅ AI chat assistant integration using Google Gemini API for Aseer Region guidance
+- ✅ Group reservation system (1-8 people) with position range display
+- ✅ Fixed button positioning and navigation issues
+- ✅ Dark/light mode support with proper Arabic RTL text handling
+- ✅ Dynamic queue management with real-time position tracking
+
+### Core Features
+- **Venue Discovery**: Browse entertainment venues in Aseer Region with detailed information
+- **Queue Management**: Join virtual queues and track wait times in real-time
+- **Group Reservations**: Reserve spots for groups of 1-8 people with position ranges
+- **AI Assistant**: Chat with Gemini-powered assistant for local recommendations
+- **Bilingual Support**: Full Arabic and English language support with cultural localization
+- **Venue Comparison**: Dynamic pros/cons tables with authentic user review data
+
 ## System Architecture
 
-The application follows a monorepo structure with clear separation between client and server code:
+The application follows a monorepo structure optimized for mobile-first Progressive Web App delivery:
 
 ### Frontend Architecture
-- **Framework**: React 18 with TypeScript
+- **Framework**: React 18 with TypeScript and strict type safety
 - **Routing**: Wouter (lightweight routing library)
-- **State Management**: TanStack React Query for server state management
+- **State Management**: TanStack React Query v5 for server state management
 - **UI Library**: shadcn/ui components built on Radix UI primitives
-- **Styling**: Tailwind CSS with custom design system
-- **Build Tool**: Vite for fast development and optimized builds
+- **Styling**: Tailwind CSS with custom Arabic-friendly design system
+- **Build Tool**: Vite with HMR for rapid development
+- **Internationalization**: Custom language context for Arabic/English switching
 
 ### Backend Architecture
-- **Runtime**: Node.js with Express.js
+- **Runtime**: Node.js with Express.js server
 - **Language**: TypeScript with ES modules
-- **API Pattern**: RESTful API endpoints
-- **Database ORM**: Drizzle ORM with PostgreSQL
-- **Session Management**: Express sessions with PostgreSQL store
+- **API Pattern**: RESTful API with type-safe endpoints
+- **Storage**: In-memory storage with structured venue data
+- **AI Integration**: Google Gemini API for chat assistance
+- **Session Management**: Express sessions for user state
 
-### Mobile-First Design
+### Mobile-First Design Philosophy
 - Responsive design optimized for mobile devices
 - Touch-friendly interface with bottom navigation
-- Arabic language support with proper RTL text handling
-- PWA capabilities for app-like experience
+- Arabic RTL text handling with proper typography
+- PWA capabilities for native app-like experience
+- Consistent dark/light mode theming
 
 ## Key Components
 
-### Database Schema (PostgreSQL)
-- **Users**: User authentication and profile management
-- **Venues**: Business locations with geospatial data
-- **Queues**: Queue management for each venue
-- **Reservations**: User queue positions and status tracking
-- **Reviews**: User feedback and ratings system
+### Data Schema
+- **Users**: Simple authentication and profile management
+- **Venues**: Entertainment locations with bilingual content, geospatial data, and pros/cons reviews
+- **Queues**: Real-time queue management for each venue
+- **Reservations**: Group reservations with position tracking and estimated wait times
+- **Pros/Cons System**: Dynamic comparison tables with Arabic/English translations
 
 ### API Endpoints
-- Venue management (CRUD operations, geospatial queries)
-- Queue operations (join, update position, status changes)
-- Reservation system (create, update status, track position)
-- User management and authentication
+- `/api/venues` - Venue discovery and management
+- `/api/queues` - Queue operations and real-time updates
+- `/api/reservations` - Group reservation system with position tracking
+- `/api/chat` - AI assistant powered by Google Gemini
+- `/api/auth` - Simple user authentication
 
 ### Frontend Pages
-- **Home**: Dashboard with nearby venues and active queue status
-- **Search**: Venue discovery with category filtering
-- **My Queues**: Active and historical queue participation
-- **Profile**: User account management and statistics
-- **Venue Detail**: Queue information and joining interface
+- **Home**: Dashboard with active queue status and venue discovery
+- **Discover**: Venue browsing with category filtering and search
+- **My Queues**: Active and historical queue participation tracking
+- **Profile**: User account and app settings management
+- **Venue Detail**: Detailed venue info with pros/cons tables and queue joining
+- **AI Chat**: Integrated assistant for Aseer Region guidance
 
-### Real-time Features
-- Live queue position updates
-- Estimated wait time calculations
-- Push notifications for queue status changes
-- QR code generation for quick venue entry
+### Unique Features
+- **Bilingual Pros/Cons Tables**: Dynamic venue comparison with authentic review data
+- **AI Regional Assistant**: Gemini-powered chat for local recommendations
+- **Group Position Ranges**: Shows "8-10" instead of single position for groups
+- **Cultural Localization**: Proper Arabic RTL support and regional content
+- **Dark Mode**: Comprehensive theming for all components
 
 ## Data Flow
 
-1. **Venue Discovery**: Users search for nearby venues using geolocation
-2. **Queue Joining**: Users select a venue and join available queues
-3. **Position Tracking**: Real-time updates on queue position and wait times
-4. **Notification System**: Alerts when user's turn approaches
-5. **Entry Process**: QR code scanning for venue entry
+1. **Venue Discovery**: Browse curated entertainment venues in Aseer Region
+2. **Venue Comparison**: Review pros/cons tables with authentic user feedback
+3. **AI Consultation**: Chat with assistant for personalized recommendations
+4. **Group Reservations**: Join queues with 1-8 people and get position ranges
+5. **Real-time Tracking**: Monitor queue progress with live position updates
+6. **Language Switching**: Seamless Arabic/English content switching
 
 ## External Dependencies
 
 ### Core Libraries
-- **@neondatabase/serverless**: Neon PostgreSQL serverless driver
-- **@radix-ui/***: Accessible UI component primitives
-- **@tanstack/react-query**: Server state management
-- **drizzle-orm**: Type-safe database ORM
-- **wouter**: Lightweight React router
+- **@google/genai**: Google Gemini AI integration for chat assistant
+- **@radix-ui/***: Accessible UI component primitives for shadcn/ui
+- **@tanstack/react-query**: Server state management (v5)
+- **wouter**: Lightweight React router for SPA navigation
+- **lucide-react**: Icon library for consistent UI elements
 
 ### Development Tools
-- **Vite**: Build tool and dev server
-- **Tailwind CSS**: Utility-first CSS framework
-- **TypeScript**: Type safety and developer experience
-- **ESBuild**: Fast JavaScript bundler for production
+- **Vite**: Fast build tool and dev server with HMR
+- **Tailwind CSS**: Utility-first CSS with Arabic RTL support
+- **TypeScript**: Full type safety across frontend and backend
+- **tsx**: TypeScript execution for server-side development
 
-### Database
-- **PostgreSQL**: Primary database (configured for Neon serverless)
-- **Drizzle Kit**: Database migrations and schema management
+### AI & External Services
+- **Google Gemini API**: Powers the regional chat assistant
+- **Environment Secrets**: Secure API key management for Gemini integration
+
+### Storage
+- **In-Memory Storage**: Structured data storage with TypeScript interfaces
+- **Mock Data**: Authentic venue data for Aseer Region entertainment locations
 
 ## Deployment Strategy
 
 ### Development Environment
-- Vite dev server with HMR for frontend
+- Replit-optimized workflow with automatic server restart
+- Vite dev server with HMR for instant frontend updates
 - Express server with TypeScript compilation via tsx
 - Shared type definitions between frontend and backend
 
-### Production Build
+### Production Considerations
 - Frontend: Vite build generating optimized static assets
-- Backend: ESBuild bundling server code for Node.js deployment
-- Database: Drizzle migrations for schema deployment
+- Backend: Express server deployment with environment variables
+- AI Integration: Secure Gemini API key management
+- Static file serving for production builds
 
 ### Environment Configuration
-- Database connection via `DATABASE_URL` environment variable
-- Separate build processes for client and server code
-- Static file serving in production mode
+- `GEMINI_API_KEY`: Required for AI chat functionality
+- Replit Deployments ready with automatic scaling
+- Session management and API endpoint configuration
+- Mobile-optimized PWA deployment
 
-### Scaling Considerations
-- Stateless server design for horizontal scaling
-- PostgreSQL connection pooling for database efficiency
-- CDN-ready static asset structure
-- Session storage in database for multi-instance support
+### Regional Focus
+- Designed specifically for Aseer Region entertainment venues
+- Arabic-first localization with cultural considerations
+- Optimized for Saudi Arabian mobile networks and usage patterns
+- Scalable architecture for tourism and entertainment industry demands
 
-The application is designed to handle high-traffic scenarios typical of popular venues while maintaining real-time responsiveness for queue management operations.
+### Recent Updates (January 2025)
+- ✅ Fixed all navigation and button positioning issues
+- ✅ Implemented dynamic bilingual pros/cons comparison system
+- ✅ Integrated Google Gemini AI for regional assistance
+- ✅ Enhanced group reservation system with position ranges
+- ✅ Comprehensive dark/light mode theming
