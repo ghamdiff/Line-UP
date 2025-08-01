@@ -262,8 +262,11 @@ export class MemStorage implements IStorage {
   async createReservation(insertReservation: InsertReservation & { userId: number; position?: number }): Promise<Reservation> {
     const id = this.currentReservationId++;
     const queue = await this.getQueue(insertReservation.queueId);
-    // Position should be one plus the number of people currently in queue
+    
+    // Position should be the current count + 1 (not +2)
+    // If there are 7 people in queue, user position should be 8
     const position = (queue?.currentCount || 0) + 1;
+    
     // Each person takes 1.5 minutes, so estimated wait time = position * 1.5
     const estimatedWaitTime = position * 1.5;
     const qrCode = `QR-${id}-${Date.now()}`;
@@ -282,7 +285,7 @@ export class MemStorage implements IStorage {
     
     this.reservations.set(id, reservation);
     
-    // Update queue count
+    // Update queue count to reflect new person joining
     if (queue && queue.currentCount !== null) {
       await this.updateQueueCount(queue.id, queue.currentCount + 1);
     }
@@ -346,9 +349,8 @@ export class MemStorage implements IStorage {
     const createdAt = new Date(reservation.createdAt);
     const elapsedMinutes = (now.getTime() - createdAt.getTime()) / (1000 * 60);
     
-    // Get queue to check current count (number of people ahead)
-    const queue = this.queues.get(reservation.queueId);
-    const initialPosition = (queue?.currentCount || 0) + 1; // Position when reservation was created
+    // Calculate initial position based on estimated wait time (reverse calculation)
+    const initialPosition = Math.ceil(reservation.estimatedWaitTime / 1.5);
     
     // Each person takes 1.5 minutes, so calculate how many people should have been served
     const peopleServed = Math.floor(elapsedMinutes / 1.5);
