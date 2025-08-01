@@ -1,4 +1,13 @@
-import { pgTable, text, serial, integer, boolean, timestamp, decimal, jsonb } from "drizzle-orm/pg-core";
+import {
+  pgTable,
+  text,
+  serial,
+  integer,
+  boolean,
+  timestamp,
+  decimal,
+  jsonb,
+} from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -28,11 +37,14 @@ export const venues = pgTable("venues", {
   imageUrl: text("image_url"),
   isActive: boolean("is_active").default(true),
   createdAt: timestamp("created_at").defaultNow(),
+  pros: jsonb("pros").default([] as string[]), // Define pros as a list of strings
+  cons: jsonb("cons").default([] as string[]), // Define cons as a list of strings
 });
-
 export const queues = pgTable("queues", {
   id: serial("id").primaryKey(),
-  venueId: integer("venue_id").references(() => venues.id).notNull(),
+  venueId: integer("venue_id")
+    .references(() => venues.id)
+    .notNull(),
   name: text("name").notNull(),
   nameAr: text("name_ar").notNull(),
   maxCapacity: integer("max_capacity").default(100),
@@ -44,8 +56,12 @@ export const queues = pgTable("queues", {
 
 export const reservations = pgTable("reservations", {
   id: serial("id").primaryKey(),
-  userId: integer("user_id").references(() => users.id).notNull(),
-  queueId: integer("queue_id").references(() => queues.id).notNull(),
+  userId: integer("user_id")
+    .references(() => users.id)
+    .notNull(),
+  queueId: integer("queue_id")
+    .references(() => queues.id)
+    .notNull(),
   position: integer("position").notNull(),
   groupSize: integer("group_size").default(1).notNull(),
   estimatedWaitTime: integer("estimated_wait_time"), // in minutes
@@ -58,8 +74,12 @@ export const reservations = pgTable("reservations", {
 
 export const reviews = pgTable("reviews", {
   id: serial("id").primaryKey(),
-  userId: integer("user_id").references(() => users.id).notNull(),
-  venueId: integer("venue_id").references(() => venues.id).notNull(),
+  userId: integer("user_id")
+    .references(() => users.id)
+    .notNull(),
+  venueId: integer("venue_id")
+    .references(() => venues.id)
+    .notNull(),
   rating: integer("rating").notNull(),
   comment: text("comment"),
   commentAr: text("comment_ar"),

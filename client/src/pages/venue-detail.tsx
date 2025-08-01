@@ -1,12 +1,30 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { ArrowRight, Star, MapPin, Clock, Users, QrCode, ChevronDown } from "lucide-react";
+import {
+  ArrowRight,
+  Star,
+  MapPin,
+  Clock,
+  Users,
+  QrCode,
+  ChevronDown,
+} from "lucide-react";
 import { Link, useParams } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -30,31 +48,44 @@ export default function VenueDetail() {
   });
 
   const reservationMutation = useMutation({
-    mutationFn: async (data: { queueId: number; estimatedWaitTime: number; groupSize: number }) => {
+    mutationFn: async (data: {
+      queueId: number;
+      estimatedWaitTime: number;
+      groupSize: number;
+    }) => {
       const response = await apiRequest("POST", "/api/reservations", {
         queueId: data.queueId,
         estimatedWaitTime: data.estimatedWaitTime,
-        groupSize: data.groupSize
+        groupSize: data.groupSize,
       });
       return response.json();
     },
     onSuccess: () => {
       toast({
-        title: language === 'ar' ? "تم الانضمام للطابور" : "Joined the queue!",
-        description: language === 'ar' ? "لقد انضممت للطابور بنجاح. ستصلك إشعارات عند اقتراب دورك." : "You have successfully joined the queue. You'll receive notifications when your turn approaches.",
+        title: language === "ar" ? "تم الانضمام للطابور" : "Joined the queue!",
+        description:
+          language === "ar"
+            ? "لقد انضممت للطابور بنجاح. ستصلك إشعارات عند اقتراب دورك."
+            : "You have successfully joined the queue. You'll receive notifications when your turn approaches.",
       });
       queryClient.invalidateQueries({ queryKey: ["/api/reservations"] });
     },
     onError: () => {
       toast({
-        title: language === 'ar' ? "خطأ" : "Error",
-        description: language === 'ar' ? "حدث خطأ أثناء الانضمام للطابور. حاول مرة أخرى." : "An error occurred while joining the queue. Please try again.",
+        title: language === "ar" ? "خطأ" : "Error",
+        description:
+          language === "ar"
+            ? "حدث خطأ أثناء الانضمام للطابور. حاول مرة أخرى."
+            : "An error occurred while joining the queue. Please try again.",
         variant: "destructive",
       });
     },
   });
 
-  const getQueueStatusColor = (currentCount: number | null, maxCapacity: number | null) => {
+  const getQueueStatusColor = (
+    currentCount: number | null,
+    maxCapacity: number | null,
+  ) => {
     const count = currentCount || 0;
     const capacity = maxCapacity || 100;
     const percentage = (count / capacity) * 100;
@@ -63,11 +94,14 @@ export default function VenueDetail() {
     return "status-red";
   };
 
-  const getQueueStatusText = (currentCount: number | null, maxCapacity: number | null) => {
+  const getQueueStatusText = (
+    currentCount: number | null,
+    maxCapacity: number | null,
+  ) => {
     const count = currentCount || 0;
     const capacity = maxCapacity || 100;
     const percentage = (count / capacity) * 100;
-    if (language === 'ar') {
+    if (language === "ar") {
       if (percentage < 10) return "طابور قصير";
       if (percentage < 30) return "طابور متوسط";
       return "طابور طويل";
@@ -79,11 +113,15 @@ export default function VenueDetail() {
   };
 
   const handleJoinQueue = (queueId: number, groupSizeOverride?: number) => {
-    const queue = queues?.find(q => q.id === queueId);
+    const queue = queues?.find((q) => q.id === queueId);
     const estimatedWaitTime = queue?.averageWaitTime || 25;
     const finalGroupSize = groupSizeOverride || groupSize;
     setSelectedQueue(queueId);
-    reservationMutation.mutate({ queueId, estimatedWaitTime, groupSize: finalGroupSize });
+    reservationMutation.mutate({
+      queueId,
+      estimatedWaitTime,
+      groupSize: finalGroupSize,
+    });
   };
 
   if (venueLoading || !venue) {
@@ -121,7 +159,7 @@ export default function VenueDetail() {
             </Button>
           </Link>
           <h1 className="text-lg font-semibold text-gray-900 dark:text-white">
-            {language === 'ar' ? 'تفاصيل المكان' : 'Venue Details'}
+            {language === "ar" ? "تفاصيل المكان" : "Venue Details"}
           </h1>
         </div>
       </div>
@@ -130,7 +168,7 @@ export default function VenueDetail() {
       <div className="relative">
         <img
           src={venue.imageUrl || "/api/placeholder/400/200"}
-          alt={language === 'ar' ? venue.nameAr : venue.name}
+          alt={language === "ar" ? venue.nameAr : venue.name}
           className="w-full h-48 object-cover object-center"
         />
         <div className="absolute bottom-4 right-4">
@@ -144,78 +182,70 @@ export default function VenueDetail() {
       {/* Venue Info */}
       <div className="px-4 py-4 bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-          {language === 'ar' ? venue.nameAr : venue.name}
+          {language === "ar" ? venue.nameAr : venue.name}
         </h1>
         <p className="text-gray-600 dark:text-gray-400 mb-3">
-          {language === 'ar' ? venue.categoryAr : venue.category}
+          {language === "ar" ? venue.categoryAr : venue.category}
         </p>
-        
+
         <div className="flex items-center gap-2 mb-3">
           <MapPin className="w-4 h-4 text-gray-400 dark:text-gray-500" />
           <span className="text-sm text-gray-600 dark:text-gray-400">
-            {language === 'ar' ? venue.addressAr : venue.address}
+            {language === "ar" ? venue.addressAr : venue.address}
           </span>
         </div>
 
-        {(language === 'ar' ? venue.descriptionAr : venue.description) && (
+        {(language === "ar" ? venue.descriptionAr : venue.description) && (
           <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-            {language === 'ar' ? venue.descriptionAr : venue.description}
+            {language === "ar" ? venue.descriptionAr : venue.description}
           </p>
         )}
-        
-        {/* Pros and Cons Table */}
+      </div>
+
+      {/* Pros and Cons Table */}
+      <div className="px-4 py-4 bg-white dark:bg-gray-800">
         <div className="overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700">
           <table className="w-full">
             <thead>
               <tr>
                 <th className="bg-green-50 dark:bg-green-900/20 px-4 py-3 text-left text-sm font-semibold text-green-800 dark:text-green-400 border-r border-gray-200 dark:border-gray-700">
-                  {language === 'ar' ? 'الإيجابيات' : 'Pros'}
+                  {language === "ar" ? "الإيجابيات" : "Pros"}
                 </th>
                 <th className="bg-red-50 dark:bg-red-900/20 px-4 py-3 text-left text-sm font-semibold text-red-800 dark:text-red-400">
-                  {language === 'ar' ? 'السلبيات' : 'Cons'}
+                  {language === "ar" ? "السلبيات" : "Cons"}
                 </th>
               </tr>
             </thead>
             <tbody>
-              <tr className="border-t border-gray-200 dark:border-gray-700">
-                <td className="bg-green-50/50 dark:bg-green-950/20 px-4 py-3 text-sm text-gray-700 dark:text-gray-300 border-r border-gray-200 dark:border-gray-700">
-                  {/* User can edit this content */}
-                </td>
-                <td className="bg-red-50/50 dark:bg-red-950/20 px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
-                  {/* User can edit this content */}
-                </td>
-              </tr>
-              <tr className="border-t border-gray-200 dark:border-gray-700">
-                <td className="bg-green-50/50 dark:bg-green-950/20 px-4 py-3 text-sm text-gray-700 dark:text-gray-300 border-r border-gray-200 dark:border-gray-700">
-                  {/* User can edit this content */}
-                </td>
-                <td className="bg-red-50/50 dark:bg-red-950/20 px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
-                  {/* User can edit this content */}
-                </td>
-              </tr>
-              <tr className="border-t border-gray-200 dark:border-gray-700">
-                <td className="bg-green-50/50 dark:bg-green-950/20 px-4 py-3 text-sm text-gray-700 dark:text-gray-300 border-r border-gray-200 dark:border-gray-700">
-                  {/* User can edit this content */}
-                </td>
-                <td className="bg-red-50/50 dark:bg-red-950/20 px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
-                  {/* User can edit this content */}
-                </td>
-              </tr>
+              {/* Dynamic rows based on pros array */}
+              {(venue.pros as string[] || []).map((pro: string, index: number) => (
+                <tr key={index} className="border-t border-gray-200 dark:border-gray-700">
+                  <td className="bg-green-50/50 dark:bg-green-950/20 px-4 py-3 text-sm text-gray-700 dark:text-gray-300 border-r border-gray-200 dark:border-gray-700">
+                    {pro}
+                  </td>
+                  <td className="bg-red-50/50 dark:bg-red-950/20 px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
+                    {(venue.cons as string[] || [])[index] || ""}
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
       </div>
-
+        
       {/* Queue Information */}
       <div className="px-4 py-4">
         <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
-          {language === 'ar' ? 'الطوابير المتاحة' : 'Available Queues'}
+          {language === "ar" ? "الطوابير المتاحة" : "Available Queues"}
         </h2>
-        
+
         {queuesLoading ? (
           <div className="space-y-3">
             {[1, 2].map((i) => (
-              <div key={i} className="bg-white rounded-xl border border-gray-200 p-4 shimmer h-24"></div>
+              <div
+                key={i}
+                className="bg-white rounded-xl border border-gray-200 p-4 shimmer h-24"
+              ></div>
             ))}
           </div>
         ) : queues?.length === 0 ? (
@@ -223,37 +253,54 @@ export default function VenueDetail() {
             <CardContent className="p-6 text-center">
               <Clock className="w-12 h-12 text-gray-400 dark:text-gray-500 mx-auto mb-3" />
               <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
-                {language === 'ar' ? 'لا توجد طوابير متاحة' : 'No queues available'}
+                {language === "ar"
+                  ? "لا توجد طوابير متاحة"
+                  : "No queues available"}
               </h3>
               <p className="text-sm text-gray-500 dark:text-gray-400">
-                {language === 'ar' ? 'هذا المكان لا يحتوي على طوابير في الوقت الحالي' : 'This venue has no queues at the moment'}
+                {language === "ar"
+                  ? "هذا المكان لا يحتوي على طوابير في الوقت الحالي"
+                  : "This venue has no queues at the moment"}
               </p>
             </CardContent>
           </Card>
         ) : (
           <div className="space-y-3">
             {queues?.map((queue) => (
-              <Card key={queue.id} className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+              <Card
+                key={queue.id}
+                className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800"
+              >
                 <CardContent className="p-4">
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex-1">
                       <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
-                        {language === 'ar' ? queue.nameAr : queue.name}
+                        {language === "ar" ? queue.nameAr : queue.name}
                       </h3>
                       <div className="flex items-center gap-2 mb-2">
-                        <div className={`status-dot ${getQueueStatusColor(queue.currentCount, queue.maxCapacity)}`}></div>
+                        <div
+                          className={`status-dot ${getQueueStatusColor(queue.currentCount, queue.maxCapacity)}`}
+                        ></div>
                         <span className="text-sm text-gray-600 dark:text-gray-400">
-                          {getQueueStatusText(queue.currentCount, queue.maxCapacity)}
+                          {getQueueStatusText(
+                            queue.currentCount,
+                            queue.maxCapacity,
+                          )}
                         </span>
                       </div>
                       <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
                         <div className="flex items-center gap-1">
                           <Users className="w-4 h-4" />
-                          <span>{queue.currentCount || 0}/{queue.maxCapacity || 100}</span>
+                          <span>
+                            {queue.currentCount || 0}/{queue.maxCapacity || 100}
+                          </span>
                         </div>
                         <div className="flex items-center gap-1">
                           <Clock className="w-4 h-4" />
-                          <span>~{queue.averageWaitTime || 0} {language === 'ar' ? 'دقيقة' : 'min'}</span>
+                          <span>
+                            ~{queue.averageWaitTime || 0}{" "}
+                            {language === "ar" ? "دقيقة" : "min"}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -262,8 +309,11 @@ export default function VenueDetail() {
                         <Popover>
                           <PopoverTrigger asChild>
                             <Button
-                              disabled={reservationMutation.isPending && selectedQueue === queue.id}
-                              className="bg-primary text-white hover:bg-primary/90 px-2 rounded-l-md rounded-r-none border-r border-primary-foreground/20"
+                              disabled={
+                                reservationMutation.isPending &&
+                                selectedQueue === queue.id
+                              }
+                              className="bg-primary text-white hover:bg-primary/90 px-2 rounded-r-md rounded-l-none border-l border-primary-foreground/20"
                             >
                               <ChevronDown className="w-4 h-4" />
                             </Button>
@@ -271,51 +321,82 @@ export default function VenueDetail() {
                           <PopoverContent className="w-56 p-3">
                             <div className="space-y-3">
                               <h4 className="font-medium text-sm">
-                                {language === 'ar' ? 'عدد الأشخاص' : 'Group Size'}
+                                {language === "ar"
+                                  ? "عدد الأشخاص"
+                                  : "Group Size"}
                               </h4>
                               <Select
                                 value={groupSize.toString()}
-                                onValueChange={(value) => setGroupSize(parseInt(value))}
+                                onValueChange={(value) =>
+                                  setGroupSize(parseInt(value))
+                                }
                               >
                                 <SelectTrigger>
                                   <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent>
                                   {[1, 2, 3, 4, 5, 6, 7, 8].map((size) => (
-                                    <SelectItem key={size} value={size.toString()}>
-                                      {size} {language === 'ar' ? (size === 1 ? 'شخص' : 'أشخاص') : (size === 1 ? 'person' : 'people')}
+                                    <SelectItem
+                                      key={size}
+                                      value={size.toString()}
+                                    >
+                                      {size}{" "}
+                                      {language === "ar"
+                                        ? size === 1
+                                          ? "شخص"
+                                          : "أشخاص"
+                                        : size === 1
+                                          ? "person"
+                                          : "people"}
                                     </SelectItem>
                                   ))}
                                 </SelectContent>
                               </Select>
-                              <Button 
-                                onClick={() => handleJoinQueue(queue.id, groupSize)}
-                                disabled={reservationMutation.isPending && selectedQueue === queue.id}
+                              <Button
+                                onClick={() =>
+                                  handleJoinQueue(queue.id, groupSize)
+                                }
+                                disabled={
+                                  reservationMutation.isPending &&
+                                  selectedQueue === queue.id
+                                }
                                 className="w-full bg-primary text-white hover:bg-primary/90"
                               >
-                                {language === 'ar' ? `انضم بـ ${groupSize} أشخاص` : `Join with ${groupSize} people`}
+                                {language === "ar"
+                                  ? `انضم بـ ${groupSize} أشخاص`
+                                  : `Join with ${groupSize} people`}
                               </Button>
                             </div>
                           </PopoverContent>
                         </Popover>
-                        
+
                         <Button
                           onClick={() => handleJoinQueue(queue.id, 1)}
-                          disabled={reservationMutation.isPending && selectedQueue === queue.id}
+                          disabled={
+                            reservationMutation.isPending &&
+                            selectedQueue === queue.id
+                          }
                           className="bg-primary text-white hover:bg-primary/90 rounded-r-md rounded-l-none"
                         >
-                          {reservationMutation.isPending && selectedQueue === queue.id 
-                            ? (language === 'ar' ? "جاري الانضمام..." : "Joining...") 
-                            : (language === 'ar' ? "انضم للطابور" : "Join Queue")}
+                          {reservationMutation.isPending &&
+                          selectedQueue === queue.id
+                            ? language === "ar"
+                              ? "جاري الانضمام..."
+                              : "Joining..."
+                            : language === "ar"
+                              ? "انضم للطابور"
+                              : "Join Queue"}
                         </Button>
                       </div>
                     </div>
                   </div>
-                  
+
                   <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                    <div 
-                      className="bg-primary h-2 rounded-full transition-all duration-300" 
-                      style={{ width: `${((queue.currentCount || 0) / (queue.maxCapacity || 100)) * 100}%` }}
+                    <div
+                      className="bg-primary h-2 rounded-full transition-all duration-300"
+                      style={{
+                        width: `${((queue.currentCount || 0) / (queue.maxCapacity || 100)) * 100}%`,
+                      }}
                     ></div>
                   </div>
                 </CardContent>
@@ -331,13 +412,16 @@ export default function VenueDetail() {
           <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
             <CardContent className="p-4">
               <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
-                {language === 'ar' ? 'معلومات الاتصال' : 'Contact Information'}
+                {language === "ar" ? "معلومات الاتصال" : "Contact Information"}
               </h3>
               <div className="flex items-center gap-2">
                 <span className="text-gray-600 dark:text-gray-400">
-                  {language === 'ar' ? 'الهاتف:' : 'Phone:'}
+                  {language === "ar" ? "الهاتف:" : "Phone:"}
                 </span>
-                <a href={`tel:${venue.phone}`} className="text-primary font-medium">
+                <a
+                  href={`tel:${venue.phone}`}
+                  className="text-primary font-medium"
+                >
                   {venue.phone}
                 </a>
               </div>
