@@ -1,4 +1,4 @@
-import { Home, Search, Clock, User } from "lucide-react";
+import { Home, Search, Clock, User, Bot } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
@@ -23,7 +23,7 @@ export default function BottomNavigation() {
 
   return (
     <div className="fixed bottom-0 left-0 w-full bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 z-50"> 
-      <div className="grid grid-cols-4 py-2"> 
+      <div className="grid grid-cols-5 py-2"> 
         <Link href="/">
           <Button variant="ghost" className={`flex flex-col items-center py-2 h-auto w-full ${getIconColor("/")}`}> 
             <Home className="w-5 h-5 mb-1" />
@@ -35,6 +35,13 @@ export default function BottomNavigation() {
           <Button variant="ghost" className={`flex flex-col items-center py-2 h-auto w-full ${getIconColor("/search")}`}> 
             <Search className="w-5 h-5 mb-1" />
             <span className="text-xs">{t('search')}</span>
+          </Button>
+        </Link>
+
+        <Link href="/discover">
+          <Button variant="ghost" className={`flex flex-col items-center py-2 h-auto w-full ${getIconColor("/discover")}`}> 
+            <Bot className="w-5 h-5 mb-1" />
+            <span className="text-xs">{t('discover')}</span>
           </Button>
         </Link>
         

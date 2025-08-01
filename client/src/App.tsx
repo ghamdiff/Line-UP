@@ -15,6 +15,7 @@ import Search from "@/pages/search";
 import MyQueues from "@/pages/my-queues";
 import Profile from "@/pages/profile";
 import VenueDetail from "@/pages/venue-detail";
+import Discover from "@/pages/discover";
 
 function Router() {
   const { isAuthenticated } = useAuth();
@@ -29,6 +30,7 @@ function Router() {
       <Route path="/search" component={Search} />
       <Route path="/my-queues" component={MyQueues} />
       <Route path="/profile" component={Profile} />
+      <Route path="/discover" component={Discover} />
       <Route path="/venue/:id" component={VenueDetail} />
       <Route component={NotFound} />
     </Switch>

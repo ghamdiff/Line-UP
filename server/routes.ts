@@ -1,6 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
+import { generateChatResponse } from "./gemini";
 import { insertVenueSchema, insertQueueSchema, insertReservationSchema, insertReviewSchema } from "@shared/schema";
 import { z } from "zod";
 
@@ -156,6 +157,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "Invalid data", errors: error.errors });
       }
       res.status(500).json({ message: "Failed to create review" });
+    }
+  });
+
+  // Chat endpoints
+  app.post("/api/chat", async (req, res) => {
+    try {
+      const { message, language } = req.body;
+      
+      if (!message || typeof message !== 'string') {
+        return res.status(400).json({ message: "Message is required" });
+      }
+
+      const response = await generateChatResponse(message, language || 'en');
+      res.json({ response });
+    } catch (error) {
+      console.error("Chat API error:", error);
+      res.status(500).json({ message: "Failed to generate response" });
     }
   });
 

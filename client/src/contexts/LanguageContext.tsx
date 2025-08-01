@@ -13,7 +13,7 @@ const translations = {
     // Navigation
     home: "الرئيسية",
     search: "البحث", 
-    explore: "استكشف",
+    discover: "استكشاف",
     myQueues: "طوابيري",
     profile: "الملف الشخصي",
     
@@ -50,7 +50,7 @@ const translations = {
     // Navigation
     home: "Home",
     search: "Search",
-    explore: "Explore", 
+    discover: "Discover", 
     myQueues: "My Queues",
     profile: "Profile",
     
