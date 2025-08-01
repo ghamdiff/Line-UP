@@ -262,14 +262,17 @@ export class MemStorage implements IStorage {
   async createReservation(insertReservation: InsertReservation & { userId: number; position?: number }): Promise<Reservation> {
     const id = this.currentReservationId++;
     const queue = await this.getQueue(insertReservation.queueId);
+    // Position should be one plus the number of people currently in queue
     const position = (queue?.currentCount || 0) + 1;
+    // Each person takes 1.5 minutes, so estimated wait time = position * 1.5
+    const estimatedWaitTime = position * 1.5;
     const qrCode = `QR-${id}-${Date.now()}`;
     
     const reservation: Reservation = {
       ...insertReservation,
       id,
       position,
-      estimatedWaitTime: insertReservation.estimatedWaitTime || null,
+      estimatedWaitTime,
       status: insertReservation.status || "waiting",
       qrCode,
       notificationSent: false,
@@ -342,22 +345,19 @@ export class MemStorage implements IStorage {
     const now = new Date();
     const createdAt = new Date(reservation.createdAt);
     const elapsedMinutes = (now.getTime() - createdAt.getTime()) / (1000 * 60);
-    const estimatedWaitTime = reservation.estimatedWaitTime;
     
-    // Calculate how much of the wait time has elapsed (0 to 1)
-    const timeProgress = Math.min(elapsedMinutes / estimatedWaitTime, 1);
+    // Get queue to check current count (number of people ahead)
+    const queue = this.queues.get(reservation.queueId);
+    const initialPosition = (queue?.currentCount || 0) + 1; // Position when reservation was created
     
-    // Start from initial position and move towards position 1 (your turn)
-    const initialPosition = Math.floor((reservation.estimatedWaitTime || 25) * 1.5); // As mentioned in requirements
-    const newPosition = Math.max(1, Math.floor(initialPosition * (1 - timeProgress)));
+    // Each person takes 1.5 minutes, so calculate how many people should have been served
+    const peopleServed = Math.floor(elapsedMinutes / 1.5);
+    
+    // New position = initial position - people served, minimum 1 (your turn)
+    const newPosition = Math.max(1, initialPosition - peopleServed);
     
     // Update the reservation position
     reservation.position = newPosition;
-    
-    // If time has fully elapsed, set position to 1 (your turn)
-    if (timeProgress >= 1) {
-      reservation.position = 1;
-    }
     
     // Update in storage
     this.reservations.set(reservation.id, reservation);

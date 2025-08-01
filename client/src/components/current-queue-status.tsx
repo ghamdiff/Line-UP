@@ -45,7 +45,11 @@ export default function CurrentQueueStatus({ reservation }: CurrentQueueStatusPr
   // Check if user's turn has arrived (position 1 or less - in queue systems position 1 means it's your turn)
   const isUserTurn = reservation.position <= 1;
 
-  const progressPercentage = Math.min(95, Math.max(5, ((10 - Math.min(reservation.position, 10)) / 10) * 100));
+  // Calculate progress based on initial position vs current position
+  // Assume initial position was around estimatedWaitTime / 1.5 (since each person takes 1.5 min)
+  const initialPosition = Math.ceil((reservation.estimatedWaitTime || 25) / 1.5);
+  const currentPosition = reservation.position;
+  const progressPercentage = Math.min(95, Math.max(5, ((initialPosition - currentPosition) / (initialPosition - 1)) * 100));
 
   return (
     <div className="px-4 py-4 bg-gradient-to-r from-primary to-blue-600 dark:from-primary dark:to-blue-700 text-white">

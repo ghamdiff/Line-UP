@@ -27,7 +27,7 @@ export default function QRCodeSection({ reservation }: QRCodeSectionProps) {
 
   return (
     <div className="px-4 py-0 pb-4">
-      <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl p-4 text-white cursor-pointer hover:from-gray-800 hover:to-gray-700 transition-all duration-200"
+      <div className="bg-gradient-to-br from-gray-900 to-gray-800 dark:from-gray-700 dark:to-gray-600 rounded-xl p-4 text-white cursor-pointer hover:from-gray-800 hover:to-gray-700 dark:hover:from-gray-600 dark:hover:to-gray-500 transition-all duration-200"
            onClick={() => {
              // Make the whole QR section clickable
              handleShare();

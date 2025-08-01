@@ -147,7 +147,11 @@ export default function MyQueues() {
                         <div 
                           className="bg-white h-2 rounded-full transition-all duration-500" 
                           style={{ 
-                            width: `${Math.min(95, Math.max(5, ((10 - Math.min(reservation.position, 10)) / 10) * 100))}%` 
+                            width: `${(() => {
+                              const initialPosition = Math.ceil((reservation.estimatedWaitTime || 25) / 1.5);
+                              const currentPosition = reservation.position;
+                              return Math.min(95, Math.max(5, ((initialPosition - currentPosition) / (initialPosition - 1)) * 100));
+                            })()}%` 
                           }}
                         ></div>
                       </div>
