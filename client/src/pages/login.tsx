@@ -33,15 +33,19 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4" style={{ backgroundImage: "url('https://pbs.twimg.com/media/FRgVBbcXIAAiBfC.jpg')" }}>
-      <Card className="w-full max-w-md bg-[rgba(255,255,255,0.40)] dark:bg-[rgba(31,41,55,0.40)] border-gray-200 dark:border-gray-700">
+    <div className="min-h-screen flex items-center justify-center p-4" style={{ 
+      backgroundImage: "url('https://i.ibb.co/ns8bZqp4/image-2.png')",
+      backgroundSize: 'cover',
+      backgroundRepeat: 'no-repeat',
+    }}>
+      <Card className="w-full max-w-md bg-transparent dark:bg-transparent border-transparent dark:border-transparent">
         <CardHeader className="text-center">
           {/* Logo Image */}
           <div className="mb-0 flex justify-center">
             <img
-              src="https://i.ibb.co/gM9PVx8s/bd9cd335-452e-45bc-b61a-3dfd063ea85a.png"
+              src="https://i.ibb.co/RpTdXMrk/bd9cd335-452e-45bc-b61a-3dfd063ea85a-2.png"
               alt="Logo"
-              className="w-48 h-48 rounded-xl"
+              className="w-64 h-64 rounded-xl"
             />
           </div>
 
@@ -67,7 +71,7 @@ export default function Login() {
             <div className="space-y-2">
               <Label
                 htmlFor="email"
-                className="text-gray-900 font-bold dark:text-gray-300"
+                className="text-gray-100 font-bold dark:text-gray-100"
               >
                 {t("emailOrPhone")}
               </Label>
@@ -78,14 +82,14 @@ export default function Login() {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white"
+                className="bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-black dark:text-white"
                 placeholder="example@email.com"
               />
             </div>
             <div className="space-y-2">
               <Label
                 htmlFor="password"
-                className="text-gray-900 font-bold dark:text-gray-300"
+                className="text-gray-100 font-bold dark:text-gray-100"
               >
                 {t("password")}
               </Label>
@@ -96,7 +100,7 @@ export default function Login() {
                 value={formData.password}
                 onChange={handleChange}
                 required
-                className="bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white"
+                className="bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-black dark:text-white"
                 placeholder="••••••••"
               />
             </div>
