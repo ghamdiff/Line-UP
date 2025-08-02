@@ -52,68 +52,68 @@ export default function CurrentQueueStatus({ reservation }: CurrentQueueStatusPr
   const progressPercentage = Math.min(100, Math.max(5, ((initialPosition - currentPosition) / (initialPosition - 1)) * 100));
 
   return (
-    <div className="px-4 py-4 bg-gradient-to-r from-primary to-blue-600 dark:from-primary dark:to-blue-700 text-white">
-      <div className="flex items-start justify-between">
+    <div className="px-4 py-3 bg-gradient-to-r from-primary to-blue-600 dark:from-primary dark:to-blue-700 text-white">
+      <div className="flex items-start justify-between mb-3">
         <div className="flex-1 min-w-0">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex-1 min-w-0">
-              <p className="font-semibold text-lg mb-1">
-                {language === 'ar' ? 'في الطابور الآن' : 'In Queue Now'}
-              </p>
-              <p className="text-sm opacity-90 truncate">
-                {language === 'ar' ? reservation.venue.nameAr : reservation.venue.name}
-              </p>
-            </div>
-            {!isUserTurn && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => leaveMutation.mutate()}
-                disabled={leaveMutation.isPending}
-                className="bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-2 rounded-full ml-3 flex-shrink-0"
-              >
-                <X className="w-4 h-4" />
-              </Button>
-            )}
-          </div>
-          
-          <div className="grid grid-cols-2 gap-4 mb-4">
-            <div className="text-center">
-              <p className="text-xs opacity-80 mb-1">
-                {language === 'ar' ? 'مكانك في الطابور' : 'Your Position'}
-              </p>
-              <p className="text-2xl font-bold queue-pulse arabic-numerals">
-                {reservation.groupSize > 1 
-                  ? `${reservation.position}-${reservation.position + reservation.groupSize - 1}`
-                  : reservation.position
-                }
-              </p>
-            </div>
-            
-            <div className="text-center">
-              <p className="text-xs opacity-80 mb-1">
-                {language === 'ar' ? 'حجم المجموعة' : 'Group Size'}
-              </p>
-              <p className="text-2xl font-bold arabic-numerals">
-                {reservation.groupSize}
-              </p>
-            </div>
-          </div>
-
-          <div className="space-y-3">
-            <QueueTimer
-              estimatedWaitTime={reservation.estimatedWaitTime || 25}
-              createdAt={reservation.createdAt}
-            />
-            <div className="w-full bg-white bg-opacity-30 rounded-full h-2">
-              <div 
-                className="bg-white h-2 rounded-full transition-all duration-500" 
-                style={{ width: `${progressPercentage}%` }}
-              ></div>
-            </div>
+          <h3 className="font-semibold text-white mb-1 truncate">
+            {language === "ar"
+              ? reservation.venue.nameAr
+              : reservation.venue.name}
+          </h3>
+          <p className="text-sm text-white opacity-90 mb-2 truncate">
+            {language === "ar"
+              ? reservation.queue.nameAr
+              : reservation.queue.name}
+          </p>
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 bg-white rounded-full"></div>
+            <span className="text-xs bg-white bg-opacity-20 px-2 py-1 rounded-full">
+              {language === "ar" ? "في الانتظار" : "Waiting"}
+            </span>
           </div>
         </div>
+        <div className="text-right ml-4">
+          <p className="text-xs font-semibold text-white opacity-90">
+            {language === "ar"
+              ? "مكانك في الطابور"
+              : "Your Position"}
+          </p>
+          <p className="text-2xl font-bold text-white queue-pulse arabic-numerals">
+            {reservation.groupSize > 1 
+              ? `${reservation.position}-${reservation.position + reservation.groupSize - 1}`
+              : reservation.position
+            }
+          </p>
+        </div>
       </div>
+      
+      <div className="mb-3">
+        <QueueTimer
+          estimatedWaitTime={reservation.estimatedWaitTime || 25}
+          createdAt={reservation.createdAt}
+        />
+        <div className="w-full bg-white bg-opacity-30 rounded-full h-2 mt-3">
+          <div
+            className="bg-white h-2 rounded-full transition-all duration-500"
+            style={{ width: `${progressPercentage}%` }}
+          ></div>
+        </div>
+      </div>
+
+      {!isUserTurn && (
+        <div className="flex justify-end">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => leaveMutation.mutate()}
+            disabled={leaveMutation.isPending}
+            className="bg-white bg-opacity-20 hover:bg-opacity-30 text-white px-3 py-1 rounded-md text-xs"
+          >
+            <X className="w-3 h-3 mr-1" />
+            {language === 'ar' ? 'مغادرة' : 'Leave'}
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

@@ -33,8 +33,8 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-4">
-      <Card className="w-full max-w-md bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+    <div className="min-h-screen flex items-center justify-center p-4" style={{ backgroundImage: "url('https://pbs.twimg.com/media/FRgVBbcXIAAiBfC.jpg')" }}>
+      <Card className="w-full max-w-md bg-[rgba(255,255,255,0.40)] dark:bg-[rgba(31,41,55,0.40)] border-gray-200 dark:border-gray-700">
         <CardHeader className="text-center">
           {/* Logo Image */}
           <div className="mb-0 flex justify-center">
@@ -67,7 +67,7 @@ export default function Login() {
             <div className="space-y-2">
               <Label
                 htmlFor="email"
-                className="text-gray-700 dark:text-gray-300"
+                className="text-gray-900 font-bold dark:text-gray-300"
               >
                 {t("emailOrPhone")}
               </Label>
@@ -85,7 +85,7 @@ export default function Login() {
             <div className="space-y-2">
               <Label
                 htmlFor="password"
-                className="text-gray-700 dark:text-gray-300"
+                className="text-gray-900 font-bold dark:text-gray-300"
               >
                 {t("password")}
               </Label>
