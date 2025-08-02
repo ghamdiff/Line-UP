@@ -37,11 +37,11 @@ export default function Login() {
       <Card className="w-full max-w-md bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
         <CardHeader className="text-center">
           {/* Logo Image */}
-          <div className="mb-6 flex justify-center">
+          <div className="mb-0 flex justify-center">
             <img
               src="https://i.ibb.co/gM9PVx8s/bd9cd335-452e-45bc-b61a-3dfd063ea85a.png"
               alt="Logo"
-              className="w-36 h-36 rounded-xl"
+              className="w-48 h-48 rounded-xl"
             />
           </div>
 
@@ -59,7 +59,7 @@ export default function Login() {
           </div>
 
           <p className="text-gray-600 dark:text-gray-400">
-            {t("loginToContinue")}
+            
           </p>
         </CardHeader>
         <CardContent>

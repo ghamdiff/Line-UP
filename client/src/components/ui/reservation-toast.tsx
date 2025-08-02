@@ -33,15 +33,15 @@ export function ReservationToast({ isVisible, onClose }: ReservationToastProps) 
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
           transition={{ type: "spring", damping: 20, stiffness: 300 }}
-          className="fixed bottom-4 left-4 right-4 z-50 mx-auto max-w-md"
+          className="fixed bottom-8 left-4 right-4 z-50 max-w-lg mx-auto"
         >
           <div 
             className={`
-              bg-green-500 dark:bg-green-600 text-white rounded-lg p-4 shadow-lg
+              bg-green-500 dark:bg-green-600 text-white rounded-lg p-6 shadow-lg
               ${language === 'ar' ? 'text-right' : 'text-left'}
             `}
           >
-            <p className="text-sm font-medium">
+            <p className="text-lg font-medium">
               {messages[language]}
             </p>
           </div>

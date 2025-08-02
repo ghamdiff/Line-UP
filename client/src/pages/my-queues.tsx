@@ -156,20 +156,19 @@ export default function MyQueues() {
                             </div>
                           </div>
                           <div className="text-left">
+                            <p className="text-s font-semibold text-white opacity-90">
+                              {language === "ar"
+                                ? "مكانك في الطابور"
+                                : "Your position"}
+                            </p>
                             <p className="text-2xl font-bold text-white queue-pulse">
                               {reservation.groupSize > 1 
                                 ? `${reservation.position}-${reservation.position + reservation.groupSize - 1}`
                                 : reservation.position
                               }
                             </p>
-                            <p className="text-xs text-white opacity-90">
-                              {language === "ar"
-                                ? "مكانك في الطابور"
-                                : "Your position"}
-                            </p>
                           </div>
                         </div>
-
                         {reservation.status === "waiting" && (
                           <div className="mb-3">
                             <QueueTimer
