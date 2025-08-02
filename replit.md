@@ -9,12 +9,13 @@ Preferred communication style: Simple, everyday language.
 ## Project Status (January 2025)
 
 ### Recently Completed Features
-- ✅ Bilingual pros/cons comparison tables for venues with dynamic content
 - ✅ AI chat assistant integration using Google Gemini API for Aseer Region guidance
 - ✅ Group reservation system (1-8 people) with position range display
 - ✅ Fixed button positioning and navigation issues
 - ✅ Dark/light mode support with proper Arabic RTL text handling
 - ✅ Dynamic queue management with real-time position tracking
+- ✅ Simplified venue details by removing pros/cons comparison tables
+- ✅ Updated QR code validity to 5 minutes
 
 ### Core Features
 - **Venue Discovery**: Browse entertainment venues in Aseer Region with detailed information
@@ -22,7 +23,7 @@ Preferred communication style: Simple, everyday language.
 - **Group Reservations**: Reserve spots for groups of 1-8 people with position ranges
 - **AI Assistant**: Chat with Gemini-powered assistant for local recommendations
 - **Bilingual Support**: Full Arabic and English language support with cultural localization
-- **Venue Comparison**: Dynamic pros/cons tables with authentic user review data
+- **Clean Venue Information**: Streamlined venue details focusing on essential information
 
 ## System Architecture
 
@@ -59,7 +60,7 @@ The application follows a monorepo structure optimized for mobile-first Progress
 - **Venues**: Entertainment locations with bilingual content, geospatial data, and pros/cons reviews
 - **Queues**: Real-time queue management for each venue
 - **Reservations**: Group reservations with position tracking and estimated wait times
-- **Pros/Cons System**: Dynamic comparison tables with Arabic/English translations
+- **Simplified Interface**: Clean, focused venue presentation without distracting comparisons
 
 ### API Endpoints
 - `/api/venues` - Venue discovery and management
@@ -77,19 +78,19 @@ The application follows a monorepo structure optimized for mobile-first Progress
 - **AI Chat**: Integrated assistant for Aseer Region guidance
 
 ### Unique Features
-- **Bilingual Pros/Cons Tables**: Dynamic venue comparison with authentic review data
 - **AI Regional Assistant**: Gemini-powered chat for local recommendations
 - **Group Position Ranges**: Shows "8-10" instead of single position for groups
 - **Cultural Localization**: Proper Arabic RTL support and regional content
 - **Dark Mode**: Comprehensive theming for all components
+- **Quick Entry**: QR codes with 5-minute validity for fast venue access
 
 ## Data Flow
 
 1. **Venue Discovery**: Browse curated entertainment venues in Aseer Region
-2. **Venue Comparison**: Review pros/cons tables with authentic user feedback
-3. **AI Consultation**: Chat with assistant for personalized recommendations
-4. **Group Reservations**: Join queues with 1-8 people and get position ranges
-5. **Real-time Tracking**: Monitor queue progress with live position updates
+2. **AI Consultation**: Chat with assistant for personalized recommendations
+3. **Group Reservations**: Join queues with 1-8 people and get position ranges
+4. **Real-time Tracking**: Monitor queue progress with live position updates
+5. **Quick Entry**: Generate QR codes valid for 5 minutes
 6. **Language Switching**: Seamless Arabic/English content switching
 
 ## External Dependencies
@@ -143,7 +144,8 @@ The application follows a monorepo structure optimized for mobile-first Progress
 
 ### Recent Updates (January 2025)
 - ✅ Fixed all navigation and button positioning issues
-- ✅ Implemented dynamic bilingual pros/cons comparison system
 - ✅ Integrated Google Gemini AI for regional assistance
 - ✅ Enhanced group reservation system with position ranges
 - ✅ Comprehensive dark/light mode theming
+- ✅ Simplified venue details by removing comparison tables
+- ✅ Set QR code validity to 5 minutes for quick entry

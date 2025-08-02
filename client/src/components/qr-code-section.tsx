@@ -70,7 +70,7 @@ export default function QRCodeSection({ reservation }: QRCodeSectionProps) {
                 e.stopPropagation(); // Prevent double triggering
                 handleShare();
               }}
-              className="bg-white bg-opacity-20 hover:bg-opacity-30 text-white"
+              className="bg-white bg-opacity-20 hover:bg-opacity-30 text-gray-900 dark:text-white"
             >
               <Share className="w-4 h-4 mr-2" />
               {language === 'ar' ? 'مشاركة' : 'Share'}
