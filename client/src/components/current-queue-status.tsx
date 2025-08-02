@@ -53,14 +53,14 @@ export default function CurrentQueueStatus({ reservation }: CurrentQueueStatusPr
 
   return (
     <div className="px-4 py-4 bg-gradient-to-r from-primary to-blue-600 dark:from-primary dark:to-blue-700 text-white">
-      <div className="flex items-start justify-between">
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex-1 min-w-0">
-              <p className="font-semibold text-lg mb-1">
+      <div className="flex items-center justify-between">
+        <div className="flex-1">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="font-semibold">
                 {language === 'ar' ? 'في الطابور الآن' : 'In Queue Now'}
               </p>
-              <p className="text-sm opacity-90 truncate">
+              <p className="text-sm opacity-90">
                 {language === 'ar' ? reservation.venue.nameAr : reservation.venue.name}
               </p>
             </div>
@@ -70,48 +70,36 @@ export default function CurrentQueueStatus({ reservation }: CurrentQueueStatusPr
                 size="sm"
                 onClick={() => leaveMutation.mutate()}
                 disabled={leaveMutation.isPending}
-                className="bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-2 rounded-full ml-3 flex-shrink-0"
+                className="bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-1.5 rounded-full ml-2"
               >
-                <X className="w-4 h-4" />
+                <X className="w-3 h-3" />
               </Button>
             )}
           </div>
-          
-          <div className="grid grid-cols-2 gap-4 mb-4">
-            <div className="text-center">
-              <p className="text-xs opacity-80 mb-1">
-                {language === 'ar' ? 'مكانك في الطابور' : 'Your Position'}
-              </p>
-              <p className="text-2xl font-bold queue-pulse arabic-numerals">
-                {reservation.groupSize > 1 
-                  ? `${reservation.position}-${reservation.position + reservation.groupSize - 1}`
-                  : reservation.position
-                }
-              </p>
-            </div>
-            
-            <div className="text-center">
-              <p className="text-xs opacity-80 mb-1">
-                {language === 'ar' ? 'حجم المجموعة' : 'Group Size'}
-              </p>
-              <p className="text-2xl font-bold arabic-numerals">
-                {reservation.groupSize}
-              </p>
-            </div>
-          </div>
+        </div>
+        <div className="text-left ml-4">
+          <p className="text-s opacity-90">
+            {language === 'ar' ? 'مكانك في الطابور' : 'Your position'}
+          </p>
+          <p className="text-2xl font-bold queue-pulse arabic-numerals">
+            {reservation.groupSize > 1 
+              ? `${reservation.position}-${reservation.position + reservation.groupSize - 1}`
+              : reservation.position
+            }
+          </p>
+        </div>
+      </div>
 
-          <div className="space-y-3">
-            <QueueTimer
-              estimatedWaitTime={reservation.estimatedWaitTime || 25}
-              createdAt={reservation.createdAt}
-            />
-            <div className="w-full bg-white bg-opacity-30 rounded-full h-2">
-              <div 
-                className="bg-white h-2 rounded-full transition-all duration-500" 
-                style={{ width: `${progressPercentage}%` }}
-              ></div>
-            </div>
-          </div>
+      <div className="mt-3">
+        <QueueTimer
+          estimatedWaitTime={reservation.estimatedWaitTime || 25}
+          createdAt={reservation.createdAt}
+        />
+        <div className="mt-3 w-full bg-white bg-opacity-30 rounded-full h-2">
+          <div 
+            className="bg-white h-2 rounded-full transition-all duration-500" 
+            style={{ width: `${progressPercentage}%` }}
+          ></div>
         </div>
       </div>
     </div>
