@@ -18,15 +18,10 @@ A modern, bilingual queue management application for entertainment venues in Sau
 
 - **🎪 Venue Discovery**: Browse entertainment venues in Aseer Region
 - **📋 Smart Queue Management**: Real-time position tracking for groups of 1-8 people
-- **🤖 AI Assistant**: Gemini-powered local recommendations and guidance
+- **🤖 **Ask the AI**: Chat with the assistant for personalized recommendations
 - **🇸🇦 Bilingual Support**: Arabic-first design with English localization
 - **📱 Mobile-First PWA**: Touch-optimized interface with dark/light mode
 - **⚡ Quick Entry**: QR codes valid for 5 minutes for fast venue access
-
-### Language Support
-The app automatically detects user language preference and provides:
-- Arabic (العربية) - Primary language with RTL support
-- English - Secondary language for international users
 
 ## 🚀 Quick Start
 
@@ -100,4 +95,4 @@ PORT=5000
 
 ---
 
-**Built with ❤️ for the Aseer Region tourism and entertainment industry**
+**Built with ❤️ for the Aseer Development Authority**
