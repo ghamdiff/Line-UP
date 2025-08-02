@@ -29,6 +29,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { ReservationToast } from "@/components/ui/reservation-toast";
 import type { Venue, Queue } from "@shared/schema";
 
 export default function VenueDetail() {
@@ -39,6 +40,7 @@ export default function VenueDetail() {
   const queryClient = useQueryClient();
   const [selectedQueue, setSelectedQueue] = useState<number | null>(null);
   const [groupSize, setGroupSize] = useState<number>(1);
+  const [showReservationToast, setShowReservationToast] = useState(false);
 
   const { data: venue, isLoading: venueLoading } = useQuery<Venue>({
     queryKey: ["/api/venues", venueId],
@@ -62,13 +64,7 @@ export default function VenueDetail() {
       return response.json();
     },
     onSuccess: () => {
-      toast({
-        title: language === "ar" ? "تم الانضمام للطابور" : "Joined the queue!",
-        description:
-          language === "ar"
-            ? "لقد انضممت للطابور بنجاح. ستصلك إشعارات عند اقتراب دورك."
-            : "You have successfully joined the queue. You'll receive notifications when your turn approaches.",
-      });
+      setShowReservationToast(true);
       queryClient.invalidateQueries({ queryKey: ["/api/reservations"] });
     },
     onError: () => {
@@ -402,6 +398,11 @@ export default function VenueDetail() {
           </Card>
         </div>
       )}
+      
+      <ReservationToast 
+        isVisible={showReservationToast}
+        onClose={() => setShowReservationToast(false)}
+      />
     </div>
   );
 }
