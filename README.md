@@ -7,14 +7,7 @@ A modern, bilingual queue management application for entertainment venues in Sau
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue)
 ![AI Powered](https://img.shields.io/badge/AI-Google%20Gemini-orange)
 
-## 🎮 Usage
-
-1. **Browse Venues**: Explore entertainment options in Aseer Region
-2. **Ask the AI**: Chat with the assistant for personalized recommendations  
-3. **Join Queues**: Reserve spots for your group and track your position
-4. **Quick Entry**: Use QR codes for fast venue access
-
-## ✨ Key Features
+## ⭐ Key Features
 
 - **🎪 Venue Discovery**: Browse entertainment venues in Aseer Region
 - **📋 Smart Queue Management**: Real-time position tracking for groups of 1-8 people
